@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">E-Voting</string>
+    <string name="register">Register</string>
+    <string name="cast_your_vote">Cast Your Vote</string>
+    <string name="candidate_list">Candidate List</string>
+    <string name="live_results">Live Results</string>
+
+
+
+
+
+
+
+
+
+    <string name="pref">prefs</string>
+    <string name="main">main</string>
+    <string name="block">block</string>
+    <string name="block2">block2</string>
+    <string name="block3">block3</string>
+    <string name="key">key</string>
+</resources>
