@@ -14,6 +14,10 @@ blockchain_servers = ['https://272e9d8b.ngrok.io', 'https://47ce0640.ngrok.io/',
 def index():
     return render_template('index.html')
 
+@app.route('/2')
+def newIndex():
+    return render_template('index2.html')
+
 @app.route('/register')
 def register():
     return render_template('register.html')
