@@ -3,7 +3,7 @@ import hashlib
 from flask import Flask, render_template, request
 import pymysql
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='app/static/')
 
 blockchain_servers = ['https://272e9d8b.ngrok.io', 'https://47ce0640.ngrok.io/', '']
 
