@@ -23,7 +23,7 @@ def index():
 
 @app.route('/2')
 def newIndex():
-    return render_template('index2.html')
+    return render_template('base.html')
 
 @app.route('/register')
 def register():

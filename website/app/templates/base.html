@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="CSS/base.css" />
+    <link rel="stylesheet" href="static/css/base.css" />
 </head>
 
-<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+<body>
 
     <nav class="navbar navbar-default navbar-fixed-top navbar-expand-sm">
         <div class="container-fluid">
@@ -37,53 +37,9 @@
             </div>
         </div>
     </nav>
-
-    <div class="jumbotron text-center">
-
-        <h1>Welcome to E-Voting system</h1> <br>
-        <h2>If you dont vote you lose the right to complain</h2><br>
-
-        <div class="row">
-            <button type="button" class="btn btn-1">Register</button>
-            <button type="button" class="btn btn-2 ">Cast Vote</button>
-        </div>
-
-    </div>
-    <div class="container">
-        <div class="row">
-
-            <div class="col-md-4 text-center">
-                <h3><img src="images/profit.svg" class="profit"></img><b>Increases participation</b></h3>
-
-                <p>The Internet voting system tends to maximize user participation
-                    by allowing them to vote from anywhere and allowing access from different computer
-                    systems and from any device that has an internet connection.</p>
-            </div>
-
-            <div class="col-md-4 text-center">
-                <h3><img src="images/lock.svg" class="profit"></img><b>Secure</b></h3>
-
-                <p> In blockchain security system, in addition to
-                    logical and physical protection layers, mechanisms are established
-                    to ensure that only users accredited by an official document
-                    participate, so that all security guarantees are provided that
-                    equate the electronic voting process with a classic electoral process.</p>
-
-            </div>
-
-            <div class="col-md-4 text-center">
-                <h3><img src="images/shield.svg" class="profit"></img><b>Reliable</b></h3>
-
-                <p>
-                    Essential concepts
-                    to ensure privacy and the protection of the integrity of votes,
-                    as well as to allow the audit of the elections to be held.
-                    An even more secure audit than in the traditional mail vote,
-                    where the voter loses control over his or her vote.</p>
-
-            </div>
-        </div>
-    </div>
+    
+    {% block content %} {% endblock %}
+    
 </body>
 
 </html>
