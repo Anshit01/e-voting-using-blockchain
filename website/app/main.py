@@ -5,7 +5,7 @@ import pymysql
 
 from app import config
 
-app = Flask(__name__, static_folder='app/static/')
+app = Flask(__name__)
 
 blockchain_servers = ['https://272e9d8b.ngrok.io', 'https://47ce0640.ngrok.io/', '']
 
