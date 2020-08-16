@@ -3,12 +3,19 @@ import hashlib
 from flask import Flask, render_template, request
 import pymysql
 
+from app import config
+
 app = Flask(__name__, static_folder='app/static/')
 
 blockchain_servers = ['https://272e9d8b.ngrok.io', 'https://47ce0640.ngrok.io/', '']
 
-# connection = pymysql.connect('localhost', 'root', '1234', 'e_voting')
-# cursor = connection.cursor()
+try:
+    connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
+except Exception as e:
+    print("Error: Unable to connect to mySQL server.")
+    print("Error: " + str(e))
+    print("The app will exit now.")
+    exit()
 
 @app.route('/')
 def index():
@@ -88,6 +95,3 @@ def check_candidate():
         print('Error:', e)
     return '0'
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
