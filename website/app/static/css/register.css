@@ -1,4 +1,4 @@
-.container{
+/* .container{
     width:25%;
     margin-top: 2%;
     background-color: #f1ffeb;
@@ -6,7 +6,15 @@
     padding-left: 2%;
     padding-top: 0;
     padding-right: 2%;
+} */
+
+.div-form {
+    background-color: #D6CFC7;
+    margin: 50px 0;
+    padding: 30px 20px;
+    border-radius: 10px;
 }
+
 .body{
     font-family: 'Ubuntu', sans-serif;
 }
