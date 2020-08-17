@@ -11,6 +11,7 @@ blockchain_servers = ['https://272e9d8b.ngrok.io', 'https://47ce0640.ngrok.io/',
 
 try:
     connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
+    cursor = connection.cursor()
 except Exception as e:
     print("Error: Unable to connect to mySQL server.")
     print("Error: " + str(e))
@@ -23,7 +24,7 @@ def index():
 
 @app.route('/2')
 def newIndex():
-    return render_template('base.html')
+    return render_template('index2.html')
 
 @app.route('/register')
 def register():
