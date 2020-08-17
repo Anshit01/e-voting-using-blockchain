@@ -1,0 +1,38 @@
+.body{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.container{
+    margin-top: 7%;
+    background-color: #f0f3fa; 
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.btn-primary{
+    background-color: #1e305c;
+    border-radius: 20px;
+    border-color: #1e305c;
+    font-size: 20px;   
+    width: 70%;
+}
+
+.btn-primary:hover{
+    background-color: #1e305c;
+    border-color: #1e305c;
+}
+
+input[type=text],
+input[type=password]
+{
+
+    border-radius: 20px;
+    text-align: center;
+}
+
+.form-group {
+    text-align: center;
+}
+
