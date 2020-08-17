@@ -1,0 +1,58 @@
+body {
+    font: 400 15px/1.8 Lato, sans-serif;
+    
+  }
+
+  .navbar {
+    font-family: Montserrat, sans-serif;
+    margin-bottom: 0;
+    background-color: #000000;
+    border: 0;
+    font-size: 18px !important;
+    letter-spacing: 4px;
+    opacity: 0.9;
+  }
+
+  .navbar li a, .navbar .navbar-brand { 
+    color: #d5d5d5 !important;
+  }
+
+  .navbar-brand {
+      font-size: 25px;
+  }
+
+  .navbar-nav li a:hover {
+    color: #fff !important;
+  }
+
+  .jumbotron {
+    background-color: #000000;
+    color: #fff;
+    padding: 100px 25px;
+    font-family: Montserrat, sans-serif;
+  }
+
+
+  .btn {
+      border-color: #fca311;
+      background-color: transparent;
+      font-size: 25px;
+      color: #fca311;
+  }
+
+  .btn:hover {
+      background-color: #fca311;
+      color: #fff;
+  }
+
+/************************BODY**************************************************************/
+
+  .profit {
+      width: 10%;
+  }
+
+ .con-1 {
+     background-color: #f5f5f5;
+ }
+
+ /*****************************************TIMELINE*****************************************/
