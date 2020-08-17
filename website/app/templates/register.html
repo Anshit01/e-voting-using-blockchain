@@ -1,132 +1,67 @@
- <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: black;
-}
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
 
-* {
-  box-sizing: border-box;
-}
+{% block custom_css %}
+  <link rel="stylesheet" href="static/css/register.css">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+{% endblock %}
 
-/* Add padding to containers */
-.container {
-  padding: 16px;
-  background-color: white;
-}
+{% block content %}
 
-/* Full-width input fields */
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
+       <div class="container">
 
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
+               <br><br>
 
-/* Overwrite default styles of hr */
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
+               <h1>Create Account</h1><br>
 
-/* Set a style for the submit button */
-.registerbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
+                <form>
 
-.registerbtn:hover {
-  opacity: 1;
-}
+                    <div class="form-group">
+                        <label for="exampleInputUsername">Username</label>
+                        <input type="username" class="form-control" id="exampleInputUsername" placeholder="Username">
+                    </div>
 
-/* Add a blue text color to links */
-a {
-  color: dodgerblue;
-}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        
+                    </div>
 
-/* Set a grey background color and center the text of the "sign in" section */
-.signin {
-  background-color: #f1f1f1;
-  text-align: center;
-}
-</style>
-</head>
-<body>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
 
-<form action="register/success" method="POST">
-  <div class="container">
-    <h1><center>Register</center></h1>
-    <p><center>Please fill in this form to create an account.</center></p>
-    <hr>
-    <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter Your Name" name="name" required>
+                    <div class="form-group">
+                        <label for="exampleInputnumber">Aadhar Card Number</label>
+                        <input type="number" class="form-control" id="exampleInputnumber" placeholder="Enter 12 digit number">
+                    </div>
 
-    <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" name="email" required>
+                     <div class="form-group">
+                        <label for="exampleInputnumber">Contact Number</label>
+                        <input type="number" class="form-control" id="exampleInputnumber" placeholder="Enter phone number">
+                    </div>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
-    <input type="checkbox" onclick="myFunction()">
+                    <div class="form-group">
+                        <label for="exampleInputtext">Constituency</label>
+                        <input type="textr" class="form-control" id="exampleInputtext" placeholder="Enter Constituency">
+                    </div>
 
-    <label for="psw-repeat"><b>Confirm Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-    
-    <label for="aad"><b>Aadhar Card Number</b></label>
-    <input type="text" placeholder="Enter 12 digit Aadhar Number" name="aad" required>
-    
-    <label for="cn"><b>Contact Number</b></label>
-    <input type="text" placeholder="Enter Contact Number" name="cn" required>
-    
-    <label for="cnst"><b>Constituency</b></label>
-    <input type="text" placeholder="Enter Constituency" name="cnst" required>
-    
+                    <div class="form-group">
+                        <label for="inputState">State</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>choose your state</option>
+                            <option>Rajasthan</option>
+                            <option>Bihar</option>
+                            <option>Uttar Pradesh</option>
+                        </select>
+                    </div>    
+                    
 
-    
-    <label for="state"><b>Choose your state:</b></label>
+                    <button type="submit" class="btn  btn-primary">Sign Up</button>
 
-    <select id="state">
-        <option value="raj">Rajasthan</option>
-  		<option value="hp">Himachal Pradesh</option>
-  		<option value="bihar">Bihar</option>
-  		<option value="ors">Others</option>
-	</select>
-    <hr>
-    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+                </form>
 
-    <button type="submit" class="registerbtn">Register</button>
-  </div>
-  
-  <div class="container signin">
-    <p>Already have an account? <a href="/vote">Cast Vote</a>.</p>
-  </div>
-</form>
+            </div>
 
-<script>
-function myFunction() {
-  var x = document.getElementById("psw");
-  if (x.type === "psw") {
-    x.type = "text";
-  } else {
-    x.type = "psw";
-  }
-}
-</script>
-
-</body>
-</html>
+{% endblock %}

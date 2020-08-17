@@ -1,4 +1,41 @@
 
+  .jumbotron {
+    background-color: #000000;
+    color: #fff;
+    padding: 100px 25px;
+    font-family: Montserrat, sans-serif;
+  }
+
+
+  .btn {
+      border-color: #fca311;
+      background-color: transparent;
+      font-size: 25px;
+      color: #fca311;
+  }
+
+  .btn:hover {
+      background-color: #fca311;
+      color: #fff;
+  }
+
+/************************BODY**************************************************************/
+
+  .profit {
+      width: 10%;
+  }
+
+ .con-1 {
+     background-color: #f5f5f5;
+ }
+
+ /*****************************************TIMELINE*****************************************/
+
+ 
+ 
+ 
+ 
+ 
  .timeline {
     list-style: none;
     padding: 20px 0 20px;
