@@ -10,59 +10,53 @@
 
        <div class="container">
             <div class="row">
-                <div class="col-10 mx-auto col-sm-7 col-md-6 col-lg-5 div-form">
+                <div class="col-10 mx-auto col-sm-9 col-md-7 col-lg-5 div-form">
                         <h2>Create Account</h2><br>
-                        <form>
+                        <form method="POST" action="#">
 
                             <div class="form-group">
-                                <label for="exampleInputUsername">Username</label>
-                                <input type="username" class="form-control" id="exampleInputUsername" placeholder="Example...Noahh">
+                                <label for="name">Full Name</label>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Example...Noahh">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" class="form-control" name="dob" id="dob" placeholder="Example...Noahh">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="aadhar-id">Aadhar Card Number</label>
+                                <input type="number" class="form-control" name="aadhar_id" id="aadhar-id" placeholder="Example..1111 2345 6789">
                             </div>
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="asdf@mail.com">
-                                
+                                <input type="email" class="form-control" name="email" id="email" placeholder="asdf@mail.com">
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Pass@123">
+                                <label for="contact-no">Contact Number</label>
+                                <input type="number" class="form-control" name="contact_no" id="contact-no" placeholder="Example..09345678923">
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputtext">Aadhar Card Number</label>
-                                <input type="text" class="form-control" id="exampleInputtext" placeholder="Example..1111 2345 6789">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Pass@123">
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputtext">Contact Number</label>
-                                <input type="text" class="form-control" id="exampleInputtext" placeholder="Example..09345678923">
+                                <label for="password-confirm">Confirm Password</label>
+                                <input type="password" class="form-control" id="password-confirm" placeholder="Pass@123">
                             </div>
-
-                            <div class="form-group">
-                                <label for="exampleInputtext">Constituency</label>
-                                <input type="text" class="form-control" id="exampleInputtext" placeholder="Example..New Delhi">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputState">State</label>
-                                <select id="inputState" class="form-control">
-                                    <option selected>choose your state</option>
-                                    <option>Rajasthan</option>
-                                    <option>Bihar</option>
-                                    <option>Uttar Pradesh</option>
-                                </select>
-                            </div>  <br>  
-                            
+                            <br>
 
                             <button type="submit" class="btn  btn-primary">Sign Up</button>
 
                         </form><br>
-
-                        <span >Already have an account? </span>
-                        <a href="/vote" class="extra"><b>Cast Vote</b></a>
-
+                        <p id="cast-vote-link">
+                            <span >Already have an account? </span>
+                            <a href="/vote" class="extra"><b>Cast Vote</b></a>
+                        </p>
                 </div>
 
             </div>

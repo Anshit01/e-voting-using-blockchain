@@ -1,6 +1,7 @@
 import json
 import hashlib
-from flask import Flask, render_template, request
+import random
+from flask import Flask, render_template, request, redirect
 import pymysql
 
 from app import config
@@ -26,9 +27,14 @@ def index():
 def newIndex():
     return render_template('index2.html')
 
-@app.route('/register')
+@app.route('/register', methods=['POST', 'GET'])
 def register():
-    return render_template('register.html')
+    if request.method == 'GET':
+        return render_template('register.html')
+    else:
+        
+        return "submitted"
+        
 
 @app.route('/register/success', methods=['POST', 'GET'])
 def register_success():
@@ -51,7 +57,6 @@ def candidate_list():
     try:
         cursor.execute("select * from candidate_list;")
         rows = cursor.fetchall()
-        print(rows)
         candidateList = []
         for row in rows:
             candidateList.append({
@@ -64,13 +69,15 @@ def candidate_list():
         print(str(e))
         return render_template('error.html', error = "Error in fetching data from database.")
 
+
+
 @app.route('/voter_list')
 def voter_list():
     return render_template('admin.html')
 
 
 @app.route('/create_user', methods=['POST'])
-def create_user():
+def create_user_route():
     try:
         name = request.form['name']
         password = request.form['password']
@@ -110,3 +117,24 @@ def check_candidate():
         print('Error:', e)
     return '0'
 
+def create_user(data : dict):
+    try:
+        name = data['name']
+        password = data['password']
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+        aadhar_id = data['aadhar_id']
+        dob = data['dob']
+        contact_no = data['contact_no']
+        
+        lst = [name, aadhar_id, dob, contact_no]
+        key = hashlib.md5(str(lst).encode()).hexdigest()
+        voter_id = int(aadhar_id[-5:]+ contact_no[-3:])
+        print(voter_id)
+        query = f'''insert into voter_list values({voter_id}, '{name}', '{password_hash}', {aadhar_id}, "{dob}", {contact_no}, "{key}", 0, 0);'''
+        cursor.execute(query)
+        connection.commit()
+        return key
+    except Exception as e:
+        connection.rollback()
+        print('Error: ', e)
+    return '0'

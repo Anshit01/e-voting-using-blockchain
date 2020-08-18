@@ -4,7 +4,7 @@ import json
 from app.Blockchain import Blockchain
 import hashlib
 
-server = 'http://127.0.0.1:5001'
+server = 'https://e-voting-blockchain-website'
 
 app = Flask(__name__)
 
