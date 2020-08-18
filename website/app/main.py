@@ -10,14 +10,16 @@ app = Flask(__name__)
 
 blockchain_servers = ['https://272e9d8b.ngrok.io', 'https://47ce0640.ngrok.io/', '']
 
+connection = None
+cursor = None
+
 try:
     connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
     cursor = connection.cursor()
 except Exception as e:
     print("Error: Unable to connect to mySQL server.")
     print("Error: " + str(e))
-    print("The app will exit now.")
-    exit()
+
 
 @app.route('/')
 def index():
@@ -32,8 +34,11 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
     else:
-        
-        return "submitted"
+        data = dict(request.form)
+        key = create_user(data)
+        if key == '':
+            return render_template('error.html', error='Unable to create Voter ID. Possibly a voter ID already exists with the same Aadhar ID.')
+        return render_template('key.html', key=key)
         
 
 @app.route('/register/success', methods=['POST', 'GET'])
@@ -57,18 +62,23 @@ def candidate_list():
     try:
         cursor.execute("select * from candidate_list;")
         rows = cursor.fetchall()
-        candidateList = []
-        for row in rows:
-            candidateList.append({
-                'candidate_id': row[0],
-                'name': row[1],
-                'party': row[2]
-            })
-        return render_template('cdl.html', candidateList = candidateList)
-    except Exception as e:
-        print(str(e))
-        return render_template('error.html', error = "Error in fetching data from database.")
-
+    except:
+        check_mysql_connection()
+        try:
+            cursor.execute("select * from candidate_list;")
+            rows = cursor.fetchall()
+        except Exception as e2:
+            print(str(e2))
+            return render_template('error.html', error = "Error in fetching data from database.")
+    candidateList = []
+    for row in rows:
+        candidateList.append({
+            'candidate_id': row[0],
+            'name': row[1],
+            'party': row[2]
+        })
+    return render_template('cdl.html', candidateList = candidateList)
+    
 
 
 @app.route('/voter_list')
@@ -76,7 +86,7 @@ def voter_list():
     return render_template('admin.html')
 
 
-@app.route('/create_user', methods=['POST'])
+@app.route('/create_user', methods=['POST'])        #TODO: use create_user function
 def create_user_route():
     try:
         name = request.form['name']
@@ -109,7 +119,7 @@ def check_candidate():
         aadhar_id = request.form['aadhar_id']
         password_hash = request.form['password_hash']
         key = request.form['key']
-        cursor.execute(f'''select * from voter_list where aadhar_id = {aadhar_id}''')
+        cursor.execute('select * from voter_list where aadhar_id = %s', (aadhar_id))
         result = cursor.fetchone()
         if name == result[1] and password_hash == result[2] and key == result[6] and result[7] == 0 and result[8] == 1:
             return '1'
@@ -118,6 +128,7 @@ def check_candidate():
     return '0'
 
 def create_user(data : dict):
+    check_mysql_connection()
     try:
         name = data['name']
         password = data['password']
@@ -125,16 +136,37 @@ def create_user(data : dict):
         aadhar_id = data['aadhar_id']
         dob = data['dob']
         contact_no = data['contact_no']
-        
-        lst = [name, aadhar_id, dob, contact_no]
+        email = data['email']
+        verified = 1               #verification automated
+        lst = [name, aadhar_id, dob, contact_no, random.randrange(10**10)]
         key = hashlib.md5(str(lst).encode()).hexdigest()
-        voter_id = int(aadhar_id[-5:]+ contact_no[-3:])
-        print(voter_id)
-        query = f'''insert into voter_list values({voter_id}, '{name}', '{password_hash}', {aadhar_id}, "{dob}", {contact_no}, "{key}", 0, 0);'''
-        cursor.execute(query)
+        key_hash = hashlib.sha256(key.encode()).hexdigest()
+        cursor.execute("insert into voter_list (name, password_hash, aadhar_id, dob, email, contact_no, key_hash, voted, verified) values (%{name}s, %{password_hash}s, %{aadhar_id}s, %{dob}s, %{email}s, %{contact_no}s, %{key_hash}s, false, %{verified});", {
+                'name': name,
+                'password_hash': password_hash,
+                'aadhar_id': aadhar_id,
+                'dob': dob,
+                'email': email,
+                'contact_no': contact_no,
+                'key_hash': key_hash,
+                'verified': verified
+        })
         connection.commit()
         return key
     except Exception as e:
         connection.rollback()
         print('Error: ', e)
-    return '0'
+    return ''
+
+def check_mysql_connection():
+    try:
+        cursor.execute("select s_no from sample_table where s_no=1;")
+        cursor.fetchone()
+    except:
+        print("Reconnecting to database server...")
+        try:
+            connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
+            cursor = connection.cursor()
+        except Exception as e:
+            print("Error: Unable to connect to mySQL server.")
+            print("Error: " + str(e))
