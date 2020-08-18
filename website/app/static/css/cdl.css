@@ -1,0 +1,25 @@
+.body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+
+.tab {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 0%;
+    margin-left: 0;
+    margin-top: 7%;
+}
+
+.thread-dec {
+    background-color: #ffb647;
+}
+
+.down-row {
+    background-color: #fff7eb;
+}
+
