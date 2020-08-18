@@ -48,7 +48,21 @@ def cast():
 
 @app.route('/candidate_list')
 def candidate_list():
-    return render_template('cdl.html')
+    try:
+        cursor.execute("select * from candidate_list;")
+        rows = cursor.fetchall()
+        print(rows)
+        candidateList = []
+        for row in rows:
+            candidateList.append({
+                'candidate_id': row[0],
+                'name': row[1],
+                'party': row[2]
+            })
+        return render_template('cdl.html', candidateList = candidateList)
+    except Exception as e:
+        print(str(e))
+        return render_template('error.html', error = "Error in fetching data from database.")
 
 @app.route('/voter_list')
 def voter_list():
