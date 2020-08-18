@@ -4,6 +4,8 @@
     color: #fff;
     padding: 100px 25px;
     font-family: Montserrat, sans-serif;
+    border-radius: 0;
+    margin-bottom: 80px;
   }
 
 
@@ -12,6 +14,7 @@
       background-color: transparent;
       font-size: 25px;
       color: #fca311;
+      margin: 30px 10px;
   }
 
   .btn:hover {
@@ -21,8 +24,10 @@
 
 /************************BODY**************************************************************/
 
-  .profit {
-      width: 10%;
+  img.profit {
+      height: 24px;
+      margin-bottom: 8px;
+      margin-right: 5px;
   }
 
  .con-1 {
