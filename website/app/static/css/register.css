@@ -42,6 +42,10 @@ h2{
     font-size: 250%;
 }
 
+#cast-vote-link {
+    text-align: center;
+}
+
 .extra {
     margin-left: 8px;
     color: #0e7395;
