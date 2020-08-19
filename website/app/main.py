@@ -8,18 +8,14 @@ from app import config
 
 app = Flask(__name__)
 
-blockchain_servers = ['https://272e9d8b.ngrok.io', 'https://47ce0640.ngrok.io/', '']
+blockchain_servers = [
+    'https://e-voting-blockchain-core-1.herokuapp.com/',
+    'https://e-voting-blockchain-core-2.herokuapp.com/',
+    'https://e-voting-blockchain-core-3.herokuapp.com/'
+]
 
-connection = None
-cursor = None
-
-try:
-    connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
-    cursor = connection.cursor()
-except Exception as e:
-    print("Error: Unable to connect to mySQL server.")
-    print("Error: " + str(e))
-
+connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
+cursor = connection.cursor()
 
 @app.route('/')
 def index():
@@ -63,12 +59,12 @@ def candidate_list():
         cursor.execute("select * from candidate_list;")
         rows = cursor.fetchall()
     except:
-        check_mysql_connection()
+        check_mysql_connection(cursor)
         try:
             cursor.execute("select * from candidate_list;")
             rows = cursor.fetchall()
-        except Exception as e2:
-            print(str(e2))
+        except Exception as e:
+            print(str(e))
             return render_template('error.html', error = "Error in fetching data from database.")
     candidateList = []
     for row in rows:
@@ -83,7 +79,26 @@ def candidate_list():
 
 @app.route('/voter_list')
 def voter_list():
-    return render_template('admin.html')
+    query = "select voter_id, name, voted from voter_list;"
+    try:
+        cursor.execute(query)
+        rows = cursor.fetchall()
+    except:
+        check_mysql_connection(cursor)
+        try:
+            cursor.execute(query)
+            rows = cursor.fetchall()
+        except Exception as e:
+            print(str(e))
+            return render_template('error.html', error="Error in fetching data from database.")
+    voterList = []
+    for row in rows:
+        voterList.append({
+            'voter_id': row[0],
+            'name': row[1],
+            'voted': row[2]
+        })
+    return render_template('admin.html', voterList=voterList)
 
 
 @app.route('/create_user', methods=['POST'])        #TODO: use create_user function
@@ -128,7 +143,7 @@ def check_candidate():
     return '0'
 
 def create_user(data : dict):
-    check_mysql_connection()
+    check_mysql_connection(cursor)
     try:
         name = data['name']
         password = data['password']
@@ -141,16 +156,16 @@ def create_user(data : dict):
         lst = [name, aadhar_id, dob, contact_no, random.randrange(10**10)]
         key = hashlib.md5(str(lst).encode()).hexdigest()
         key_hash = hashlib.sha256(key.encode()).hexdigest()
-        cursor.execute("insert into voter_list (name, password_hash, aadhar_id, dob, email, contact_no, key_hash, voted, verified) values (%{name}s, %{password_hash}s, %{aadhar_id}s, %{dob}s, %{email}s, %{contact_no}s, %{key_hash}s, false, %{verified});", {
-                'name': name,
-                'password_hash': password_hash,
-                'aadhar_id': aadhar_id,
-                'dob': dob,
-                'email': email,
-                'contact_no': contact_no,
-                'key_hash': key_hash,
-                'verified': verified
-        })
+        cursor.execute("insert into voter_list (name, password_hash, aadhar_id, dob, email, contact_no, key_hash, voted, verified) values (%s, %s, %s, %s, %s, %s, %s, false, %s);", (
+                name,
+                password_hash,
+                aadhar_id,
+                dob,
+                email,
+                contact_no,
+                key_hash,
+                verified
+        ))
         connection.commit()
         return key
     except Exception as e:
@@ -158,12 +173,12 @@ def create_user(data : dict):
         print('Error: ', e)
     return ''
 
-def check_mysql_connection():
+def check_mysql_connection(cursor):
     try:
-        cursor.execute("select s_no from sample_table where s_no=1;")
-        cursor.fetchone()
-    except:
+        cursor.execute("select * from sample_table where s_no=1;")
+    except Exception as e1:
         print("Reconnecting to database server...")
+        print(str(e1))
         try:
             connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
             cursor = connection.cursor()
