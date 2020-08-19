@@ -1,12 +1,13 @@
 import json
 import hashlib
 import random
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import pymysql
 
 from app import config
 
 app = Flask(__name__)
+app.secret_key = config.appSecretKey
 
 blockchain_servers = [
     'https://e-voting-blockchain-core-1.herokuapp.com/',
@@ -45,9 +46,31 @@ def register_success():
 def results():
     return render_template('results.html')
 
-@app.route('/vote')
+@app.route('/login', methods=['POST', 'GET'])
 def vote():
-    return render_template('vote.html')
+    if request.method == 'POST':
+        check_mysql_connection(cursor)
+        try:
+            name = request.form['name']
+            voter_id = request.form['voter_id']
+            password = request.form['password']
+            password_hash = hashlib.sha256(password.encode()).hexdigest()
+            cursor.execute("select name, password_hash from voter_list where voter_id = %s;", (voter_id))
+            result = cursor.fetchone()
+            if result is not None:
+                if name == result[0] and password_hash == result[1]:
+                    session['name'] = name
+                    session['voter_id'] = voter_id
+                    return redirect('/vote/cast')
+                else:
+                    return render_template('login.html', warning="User name or password does not match. Try again.")
+            else:
+                return render_template('login.html', warning="Invalid Voter ID.")
+        except Exception as e:
+            print(str(e))
+            return render_template('error.html', error="Unable to connect to the database. Please try again later.")
+    else:
+        return render_template('login.html', warning="")
 
 @app.route('/vote/cast', methods=['GET', 'POST'])
 def cast():
