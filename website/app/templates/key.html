@@ -1,14 +1,19 @@
-{$ extends 'base.html'}
+{% extends 'base.html' %}
 
 {% block title %}Key{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="static/css/key.css">
+{% endblock %}
 
 {% block content %}
 
     <div class="container">
         <div class="row">
-            <div class="col-10 mx-auto justify-content-center">
+            <div class="col-10 mx-auto text-center">
                 <h4>Your Private Key</h4>
                 <h3>{{key}}</h3>
+                <hr>
                 <p>Please keep it safe!</p>
             </div>
         </div>

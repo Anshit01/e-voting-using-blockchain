@@ -1,12 +1,14 @@
 from flask import Flask, request
+from flask_cors import CORS
 import requests
 import json
 from app.Blockchain import Blockchain
 import hashlib
 
-server = 'https://e-voting-blockchain-website'
+server = 'https://e-voting-blockchain-website.herokuapp.com/'
 
 app = Flask(__name__)
+CORS(app)
 
 blockchain = Blockchain()
 
