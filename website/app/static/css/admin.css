@@ -1,0 +1,19 @@
+h1{
+    text-align: center;
+}
+
+.body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.tab {
+    margin-top: 7%;
+}
+
+.thread-dec {
+    background-color: #5ad8cc;
+}
+
+.row-down {
+    background-color: #def7f6;
+}
