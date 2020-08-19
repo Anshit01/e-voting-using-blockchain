@@ -5,7 +5,7 @@ import json
 from app.Blockchain import Blockchain
 import hashlib
 
-server = 'https://e-voting-blockchain-website.herokuapp.com'
+server = 'https://e-voting-blockchain-website.herokuapp.com/api'
 
 app = Flask(__name__)
 CORS(app)
@@ -24,9 +24,10 @@ def get_blockchain():
 def cast_vote():
     voter_id = request.form['voter_id']
     key = request.form['key']
+    key_hash = hashlib.sha256(key.encode()).hexdigest()
     candidate_id = request.form['candidate_id']
-    payload = {'voter_id': voter_id, 'key': key}
-    r = requests.post(server+'/check_voter', data=payload)
+    payload = {'voter_id': voter_id, 'key_hash': key_hash}
+    r = requests.post(server+'/voter_check', data=payload)
     if r.text == '1':
         blockchain.add_block(candidate_id)
         return '1'
@@ -34,7 +35,7 @@ def cast_vote():
 
 @app.route('/get_result')
 def get_result():
-    chain = blockchain.chain
+    chain = blockchain.chain[1:]
     result = {}
     for block in chain:
         candidate_id = block.candidate_id
