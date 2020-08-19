@@ -185,3 +185,4 @@ def check_mysql_connection(cursor):
         except Exception as e:
             print("Error: Unable to connect to mySQL server.")
             print("Error: " + str(e))
+    globals()['cursor'] = cursor
