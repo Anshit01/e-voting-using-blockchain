@@ -3,10 +3,10 @@
 }
 
 .div-form{
-    margin-top: 7%;
+    margin-top: 8%;
     background-color: #f0f3fa; 
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding-top: 4%;
+    padding-bottom: 4%;
     text-align: center;
     border-radius: 20px;
 }
@@ -25,14 +25,40 @@
 }
 
 input[type=text],
-input[type=password]
+input[type=password],
+input[type=number]
 {
 
     border-radius: 20px;
     text-align: center;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .form-group {
     text-align: center;
+}
+
+.extra {
+    margin-left: 5px;
+    color: #0e7395;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.extra:hover {
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 350%;
 }
 

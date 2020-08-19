@@ -1,95 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
+{% extends "base.html" %}
+{% block title %}Candidate List{% endblock %}
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
+{% block custom_css %}
+   <link rel="stylesheet" href="static/css/cdl.css">
 
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
+    <!---fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
+{% endblock %}
 
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
+{% block content %}
 
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
+    <div class="container">
 
-.topnav a.active {
-  background-color: #4CAF50;
-  color: white;
-}
-</style>
-</head>
-<body>
+            <div class="row">
 
-  <div class="topnav">
-    <a class="active" href="/">E-voting</a>
-    <a href="/register">Register</a>
-    <a href="/vote">Cast Vote</a>
-    <a href="/results">Live Result</a>
-    <a href="/voter_list">Admin</a>
-    <a href="/candidate_list">Candidate List</a>
-  </div>
+                 <div class="col-10 mx-auto col-sm-10  tab">
 
+                    <h1>Candidate List</h1><br>
 
-<h1><center>Candidate List</center></h1>
+                    <table class="table table-hover">
 
-<table>
-  <tr>
-    <th>Candidate ID</th>
-    <th>Candidate Name</th>
-    <th>Party</th>
-  </tr>
-  <tr>
-    <td>1000001</td>
-    <td>A</td>
-    <td>SAAP</td>
-  </tr>
-  <tr>
-    <td>1000001</td>
-    <td>B</td>
-    <td>DJP</td>
-  </tr>
-  <tr>
-    <td>1000001</td>
-    <td>C</td>
-    <td>RONGRESS</td>
-  </tr>
-  <tr>
-    <td>1000001</td>
-    <td>D</td>
-    <td>INDEPENDENT</td>
-  </tr>
-  <tr>
-    <td>1000001</td>
-    <td>E</td>
-    <td>NOTA</td>
-  </tr>
- 
-</table>
+                            <thead class="thread-dec">
 
-</body>
-</html>
+                                <tr>
+                                    <th scope="col">Sr.No.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Party</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody >
+                                
+                                {% for i in range(candidateList|length) %}
+                                
+                                    <tr class="down-row" data-toggle="modal" data-target="#modal{{i}}">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ candidateList[i]['name'] }}</td>
+                                        <td>{{ candidateList[i]['party'] }}</td>
+                                    </tr>
+
+                                         
+                                        
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modal{{i}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                
+                                                <div class="modal-body text-center">
+                                                    
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+
+                                                   <p>{{candidateList[i]['name']}}</p>
+                                                   <p>{{candidateList[i]['party']}}</p>
+                                                   <p>Candidate ID: {{candidateList[i]['candidate_id']}}</p>
+                                                </div>
+                                               
+                                            </div>
+                                            </div>
+                                        </div>
+
+                                {% endfor %}
+
+                               
+                            </tbody>
+                    </table>   
+
+                </div>
+
+            </div>
+
+        </div>
+
+{% endblock %}        

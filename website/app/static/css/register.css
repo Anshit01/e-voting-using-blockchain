@@ -9,14 +9,24 @@
 } */
 
 .div-form {
-    background-color: #D6CFC7;
+    background-color: #f0f3fa;
     margin: 50px 0;
     padding: 30px 20px;
-    border-radius: 10px;
+    
 }
 
 .body{
     font-family: 'Ubuntu', sans-serif;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .btn-primary{
@@ -37,6 +47,22 @@
 
 }
 
-h1{
+h2{
     text-align: center;
+    font-size: 250%;
+}
+
+#cast-vote-link {
+    text-align: center;
+}
+
+.extra {
+    margin-left: 8px;
+    color: #0e7395;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.extra:hover {
+    text-decoration: none;
 }
