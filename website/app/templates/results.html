@@ -9,9 +9,9 @@
 
    <div class="container">
 
-      <div class="row">
+	<h1>Voting Statistics</h1>
 
-		<h1>Voting Statistics</h1>
+      <div class="row">
 		  
 		<div class="col-md-6  tab">
 			
@@ -28,6 +28,11 @@
 
 				<tbody>
 
+					{% for i in range(candidate|length) %}
+					<td>{{i+1}}</td>
+					<td>{{candidateList[i]['name']}}</td>
+					<td>{{candidateList[i]['party']}}</td>
+					<td></td>
 					
 				</tbody>
 
