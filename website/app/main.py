@@ -61,7 +61,7 @@ def vote():
                 if name == result[0] and password_hash == result[1]:
                     session['name'] = name
                     session['voter_id'] = voter_id
-                    return redirect('/vote/cast')
+                    return redirect('/cast')
                 else:
                     return render_template('login.html', warning="User name or password does not match. Try again.")
             else:
@@ -72,7 +72,7 @@ def vote():
     else:
         return render_template('login.html', warning="")
 
-@app.route('/vote/cast', methods=['GET', 'POST'])
+@app.route('/cast', methods=['GET', 'POST'])
 def cast():
     return render_template('cast.html')
 
