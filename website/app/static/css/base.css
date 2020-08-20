@@ -9,7 +9,7 @@ body {
     background-color: #000000;
     border: 0;
     font-size: 18px !important;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     opacity: 0.9;
   }
 
@@ -23,4 +23,8 @@ body {
 
   .navbar-nav li a:hover {
     color: #fff !important;
+  }
+
+  .dash {
+    margin-left: 4px;
   }
