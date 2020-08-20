@@ -26,6 +26,14 @@ def index():
 def newIndex():
     return render_template('index2.html')
 
+
+@app.route('/dashboard')
+def dashboard():
+    if isLoggedin():
+        return render_template("dashboard.html", loggedin = True)
+    else:
+        return redirect("/")
+
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'GET':

@@ -15,8 +15,14 @@
 
     <div class="row">
         <div class="col mx-auto">
+
+            {% if loggedin is defined and loggedin == true %}
+            <a href="/dashboard" class="btn btn-1">Dashboard</a>
+            <a href="/cast" class="btn btn-2">Cast Vote</a>
+            {% else %}
             <a href="/register" class="btn btn-1">Register</a>
             <a href="/login" class="btn btn-2">Cast Vote</a>
+            {% endif %}
         </div>
     </div>
 
