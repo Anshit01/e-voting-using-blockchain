@@ -1,80 +1,49 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<style>
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
+{% extends "base.html" %}
+{% block title %}Voting Statistics{% endblock %}
 
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
+{% block custom_css %}
+   <link rel="stylesheet" href="static/css/results.css">
+{% endblock %}
 
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
+{% block content %}
 
-.topnav a.active {
-  background-color: #4CAF50;
-  color: white;
-}
+   <div class="container">
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
+      <div class="row">
 
-</style>
-<body>
+		<h1>Voting Statistics</h1>
+		  
+		<div class="col-md-6  tab">
+			
+			<table class="table">
+
+                <thead>
+				   
+					<th>Sr.No.</th>
+					<th>Name</th>
+					<th>Political Party</th>
+					<th>Total Votes</th>
+
+				</thead>
+
+				<tbody>
+
+					
+				</tbody>
 
 
-  <div class="topnav">
-    <a class="active" href="/">E-voting</a>
-    <a href="/register">Register</a>
-    <a href="/login">Cast Vote</a>
-    <a href="/results">Live Result</a>
-    <a href="/voter_list">Admin</a>
-    <a href="/candidate_list">Candidate List</a>
-  </div>
+		</div>	
 
-<h1><center> Voting Statistics </center> </h1>
+		<div class="col-md-6 pie">
 
-<div id="piechart"></div>
+             
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-<script type="text/javascript">
-// Load google charts
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
-// Draw the chart and set the chart values
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day',],
-  ['SAAP', 800],
-  ['DJP', 215],
-  ['RONGRESS', 600],
-  ['INDEPENDENT', 212],
-  ['NOTA', 60]
-]);
-
-  // Optional; add a title and set the width and height of the chart
-  var options = {'title':'', 'width':2000, 'height':750};
-
-  // Display the chart inside the <div> element with id="piechart"
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  chart.draw(data, options);
-}
-</script>
+		</div>     
+		
+	  </div>
+	  
+  </div>  
 
 {{candidateList}}
 
-</body>
-</html>
+{% endblock %}   
