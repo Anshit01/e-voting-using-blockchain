@@ -3,7 +3,7 @@
 }
 
 .btn {
-    background-color: #a90aff;
+    background-color: #6930C3;
     border-radius: 25px;
     color: #FFFFFF;
     font-size: 25px;
@@ -25,4 +25,9 @@
 
 .party {
     font-size: 20px;
+}
+
+.btn:hover {
+    background-color: #a90aff;
+    color: #FFFFFF;
 }
