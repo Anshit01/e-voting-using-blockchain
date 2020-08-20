@@ -26,3 +26,8 @@
 .party {
     font-size: 20px;
 }
+
+.btn:hover {
+    background-color: #a90aff;
+    color: #FFFFFF;
+}
