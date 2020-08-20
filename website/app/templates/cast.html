@@ -12,13 +12,13 @@
 
 
       {% for i in range(candidateList|length) %}
-       <div class="col-md-4 text-center vote">
-
-           <img src="static/images/party_logo/independent.jpg" class="logo"></img>
-           <p class="name">{{candidateList[i]['name']}}</p>
-           <p class="party"><b>{{candidateList[i]['party']}}</b></p>
-           <a href="#" class="btn">Cast Vote</a>
-
+       <div class="col-sm-6 col-md-4 text-center">
+            <div class="candidate-div">
+                <img src="static/images/party_logo/independent.jpg" class="logo"></img>
+                <p class="name">{{candidateList[i]['name']}}</p>
+                <p class="party"><b>{{candidateList[i]['party']}}</b></p>
+                <a href="#" class="btn">Cast Vote</a>
+            </div>
        </div>
        {% endfor %}  
 
