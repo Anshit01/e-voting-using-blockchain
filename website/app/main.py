@@ -58,6 +58,7 @@ def results():
         i += 50
     return render_template('results.html', candidateList = candidateList, loggedin = isLoggedin())
 
+
 @app.route('/login', methods=['POST', 'GET'])
 def vote():
     if request.method == 'POST':
@@ -71,6 +72,7 @@ def vote():
             result = cursor.fetchone()
             if result is not None:
                 if name == result[0] and password_hash == result[1]:
+                    session.permanent = False
                     session['name'] = name
                     session['voter_id'] = voter_id
                     return redirect('/cast')
@@ -88,12 +90,11 @@ def vote():
 
 @app.route('/cast', methods=['GET', 'POST'])
 def cast():
-    # if isLoggedin():
-    #     return render_template('cast.html')
-    # else:
-    #     return redirect('/login')
-    candidateList = get_candidate_list()
-    return render_template('cast.html', candidateList=candidateList, loggedin = isLoggedin())
+    if isLoggedin():
+        candidateList = get_candidate_list()
+        return render_template('cast.html', candidateList=candidateList, loggedin = True)
+    else:
+        return redirect('/login')
 
 
 @app.route('/candidate_list')
