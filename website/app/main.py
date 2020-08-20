@@ -239,7 +239,7 @@ def get_candidate_list():
             'name': row[1],
             'party': row[2]
         })
-    return candidate_list
+    return candidateList
 
 
 def check_mysql_connection(cursor):

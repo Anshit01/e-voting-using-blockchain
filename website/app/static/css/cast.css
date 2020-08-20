@@ -1,0 +1,28 @@
+.logo {
+    width:20%;
+}
+
+.btn {
+    background-color: #a90aff;
+    border-radius: 25px;
+    color: #FFFFFF;
+    font-size: 25px;
+}
+
+.vote {
+    background-color: #f8ebff;
+    margin-top: 3%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    border-radius: 20px;
+    margin-right: 0%;
+    margin-bottom: 3%;
+}
+
+.name {
+    font-size: 25px;
+}
+
+.party {
+    font-size: 20px;
+}

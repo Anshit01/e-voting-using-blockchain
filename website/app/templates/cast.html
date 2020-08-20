@@ -9,18 +9,20 @@
 
    <div class="container">
      <div class="row">
-       <div class="col-md-4">
 
-        {% for i in range(candidateList|length) %}
 
-           <img src="#"></img>
-           <p>{{candidateList[i]['name']}}</p>
-           <p>{{candidateList[i]['party']}}</p>
+      {% for i in range(candidateList|length) %}
+       <div class="col-md-4 text-center vote">
+
+           <img src="static/images/party_logo/independent.jpg" class="logo"></img>
+           <p class="name">{{candidateList[i]['name']}}</p>
+           <p class="party"><b>{{candidateList[i]['party']}}</b></p>
            <a href="#" class="btn">Cast Vote</a>
 
-        {% endfor %}   
-
        </div>
+       {% endfor %}  
+
+       
      </div>
    </div>
 
