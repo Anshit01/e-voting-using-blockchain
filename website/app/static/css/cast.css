@@ -1,0 +1,33 @@
+.logo {
+    width:20%;
+}
+
+.btn {
+    background-color: #6930C3;
+    border-radius: 25px;
+    color: #FFFFFF;
+    font-size: 25px;
+}
+
+.candidate-div {
+    background-color: #f8ebff;
+    margin-top: 3%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    border-radius: 20px;
+    margin-right: 0%;
+    margin-bottom: 3%;
+}
+
+.name {
+    font-size: 25px;
+}
+
+.party {
+    font-size: 20px;
+}
+
+.btn:hover {
+    background-color: #a90aff;
+    color: #FFFFFF;
+}

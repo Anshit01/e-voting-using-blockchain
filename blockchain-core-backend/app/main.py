@@ -28,10 +28,10 @@ def cast_vote():
     candidate_id = request.form['candidate_id']
     payload = {'voter_id': voter_id, 'key_hash': key_hash}
     r = requests.post(server+'/voter_check', data=payload)
-    if r.text == '1':
+    response = r.json()
+    if response['status'] == 1:
         blockchain.add_block(candidate_id)
-        return '1'
-    return '0'
+    return response
 
 @app.route('/get_result')
 def get_result():

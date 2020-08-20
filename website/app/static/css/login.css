@@ -62,3 +62,6 @@ h1 {
     font-size: 350%;
 }
 
+#warning {
+    color: red;
+}

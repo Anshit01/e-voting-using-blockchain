@@ -1,17 +1,18 @@
 import json
 import hashlib
 import random
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import pymysql
 
 from app import config
 
 app = Flask(__name__)
+app.secret_key = config.appSecretKey
 
 blockchain_servers = [
-    'https://e-voting-blockchain-core-1.herokuapp.com/',
-    'https://e-voting-blockchain-core-2.herokuapp.com/',
-    'https://e-voting-blockchain-core-3.herokuapp.com/'
+    'https://e-voting-blockchain-core-1.herokuapp.com',
+    'https://e-voting-blockchain-core-2.herokuapp.com',
+    'https://e-voting-blockchain-core-3.herokuapp.com'
 ]
 
 connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
@@ -19,7 +20,7 @@ cursor = connection.cursor()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', loggedin = isLoggedin())
 
 @app.route('/2')
 def newIndex():
@@ -28,53 +29,70 @@ def newIndex():
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'GET':
-        return render_template('register.html')
+        if isLoggedin():
+            return redirect('/')
+        return render_template('register.html', loggedin = False)
     else:
+        aadhar_id = request.form['aadhar_id']
         data = dict(request.form)
         key = create_user(data)
         if key == '':
             return render_template('error.html', error='Unable to create Voter ID. Possibly a voter ID already exists with the same Aadhar ID.')
         return render_template('key.html', key=key)
-        
 
-@app.route('/register/success', methods=['POST', 'GET'])
-def register_success():
-    return render_template('register2.html')
 
 @app.route('/results')
 def results():
-    return render_template('results.html')
+    candidateList = get_candidate_list()
+    i = 100
+    for candidate in candidateList:
+        candidate['votes'] = i
+        i += 50
+    return render_template('results.html', candidateList = candidateList, loggedin = isLoggedin())
 
-@app.route('/vote')
+
+@app.route('/login', methods=['POST', 'GET'])
 def vote():
-    return render_template('vote.html')
+    if request.method == 'POST':
+        check_mysql_connection(cursor)
+        try:
+            name = request.form['name']
+            voter_id = request.form['voter_id']
+            password = request.form['password']
+            password_hash = hashlib.sha256(password.encode()).hexdigest()
+            cursor.execute("select name, password_hash from voter_list where voter_id = %s;", (voter_id))
+            result = cursor.fetchone()
+            if result is not None:
+                if name == result[0] and password_hash == result[1]:
+                    session.permanent = False
+                    session['name'] = name
+                    session['voter_id'] = voter_id
+                    return redirect('/cast')
+                else:
+                    return render_template('login.html', warning="User name or password does not match. Try again.")
+            else:
+                return render_template('login.html', warning="Invalid Voter ID.")
+        except Exception as e:
+            print(str(e))
+            return render_template('error.html', error="Unable to connect to the database. Please try again later.")
+    else:
+        if isLoggedin():
+            return redirect('/')
+        return render_template('login.html', loggedin = False)
 
-@app.route('/vote/cast', methods=['GET', 'POST'])
+@app.route('/cast', methods=['GET', 'POST'])
 def cast():
-    return render_template('cast.html')
+    if isLoggedin():
+        candidateList = get_candidate_list()
+        return render_template('cast.html', candidateList=candidateList, loggedin = True)
+    else:
+        return redirect('/login')
+
 
 @app.route('/candidate_list')
 def candidate_list():
-    try:
-        cursor.execute("select * from candidate_list;")
-        rows = cursor.fetchall()
-    except:
-        check_mysql_connection(cursor)
-        try:
-            cursor.execute("select * from candidate_list;")
-            rows = cursor.fetchall()
-        except Exception as e:
-            print(str(e))
-            return render_template('error.html', error = "Error in fetching data from database.")
-    candidateList = []
-    for row in rows:
-        candidateList.append({
-            'candidate_id': row[0],
-            'name': row[1],
-            'party': row[2]
-        })
-    return render_template('cdl.html', candidateList = candidateList)
-    
+    candidateList = get_candidate_list()
+    return render_template('cdl.html', candidateList = candidateList, loggedin = isLoggedin())
 
 
 @app.route('/voter_list')
@@ -98,8 +116,16 @@ def voter_list():
             'name': row[1],
             'voted': row[2]
         })
-    return render_template('admin.html', voterList=voterList)
+    return render_template('admin.html', voterList=voterList, loggedin = isLoggedin())
 
+@app.route('/logout')
+def logout():
+    session.pop('name', None)
+    session.pop('voter_id', None)
+    return redirect('/')
+
+
+#################################################*Andriod App API Routes*#############################################
 
 @app.route('/create_user', methods=['POST'])        #TODO: use create_user function
 def create_user_route():
@@ -125,22 +151,58 @@ def create_user_route():
 
 @app.route('/get_candidates')
 def get_candidates():
-    pass
+    candidateList = get_candidate_list()
+    return candidateList
 
-@app.route('/check_voter', methods=['POST'])
-def check_candidate():
+######################################################*Common*###########################################################
+
+
+
+############################################*Blockchain server API routes*###############################################
+
+@app.route('/api/voter_check', methods=['POST'])
+def api_voter_check():
+    voter_id = request.form['voter_id']
+    key_hash = request.form['key_hash']
+    error = ""
+    query = "select key_hash, voted, verified from voter_list where voter_id = %s;"
     try:
-        name = request.form['name']
-        aadhar_id = request.form['aadhar_id']
-        password_hash = request.form['password_hash']
-        key = request.form['key']
-        cursor.execute('select * from voter_list where aadhar_id = %s', (aadhar_id))
+        cursor.execute(query, (voter_id))
         result = cursor.fetchone()
-        if name == result[1] and password_hash == result[2] and key == result[6] and result[7] == 0 and result[8] == 1:
-            return '1'
-    except Exception as e:
-        print('Error:', e)
-    return '0'
+    except:
+        check_mysql_connection(cursor)
+        try:
+            cursor.execute(query, (voter_id))
+            result = cursor.fetchone()
+        except Exception as e:
+            print(str(e))
+            return {
+                "status": 0,
+                "error": "Unable to connect to the database."
+            }
+
+    if result is None:
+        error = "Invalid Voter ID."
+    else:
+        voted = result[1]
+        verified = result[2]
+        if result[0] == key_hash:
+            if verified == 1:
+                if voted == 1:
+                    return {"status": 1}
+                else:
+                    error = "Already Voted."
+            else:
+                error = "Voter ID not verified."
+        else:
+            error = "Incorrect Key."
+
+    return {
+        "status": 0,
+        "error": error
+    }
+
+##############################################*Helper Functions*###########################################################
 
 def create_user(data : dict):
     check_mysql_connection(cursor)
@@ -173,6 +235,29 @@ def create_user(data : dict):
         print('Error: ', e)
     return ''
 
+
+def get_candidate_list():
+    try:
+        cursor.execute("select * from candidate_list;")
+        rows = cursor.fetchall()
+    except:
+        check_mysql_connection(cursor)
+        try:
+            cursor.execute("select * from candidate_list;")
+            rows = cursor.fetchall()
+        except Exception as e:
+            print(str(e))
+            return render_template('error.html', error = "Error in fetching data from database.")
+    candidateList = []
+    for row in rows:
+        candidateList.append({
+            'candidate_id': row[0],
+            'name': row[1],
+            'party': row[2]
+        })
+    return candidateList
+
+
 def check_mysql_connection(cursor):
     try:
         cursor.execute("select * from sample_table where s_no=1;")
@@ -186,3 +271,8 @@ def check_mysql_connection(cursor):
             print("Error: Unable to connect to mySQL server.")
             print("Error: " + str(e))
     globals()['cursor'] = cursor
+
+def isLoggedin() -> bool:
+    if 'name' in session and 'voter_id' in session:
+        return True
+    return False
