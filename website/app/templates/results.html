@@ -7,11 +7,11 @@
 
 {% block content %}
 
-   <div class="container">
-
+<div class="container whole">
+    
 	<h1>Voting Statistics</h1>
 
-      <div class="row">
+    <div class="row">
 		  
 		<div class="col-md-6  tab">
 			
@@ -28,14 +28,22 @@
 
 				<tbody>
 
-					{% for i in range(candidate|length) %}
-					<td>{{i+1}}</td>
-					<td>{{candidateList[i]['name']}}</td>
-					<td>{{candidateList[i]['party']}}</td>
-					<td></td>
+					{% for i in range(candidateList|length) %}
+
+					<tr>
+
+						<td>{{i}}</td>
+						<td>{{candidateList[i]['name']}}</td>
+						<td>{{candidateList[i]['party']}}</td>
+						<td>{{candidateList[i]['votes']}}</td>
+
+					</tr>
+					
+					{% endfor %}
 					
 				</tbody>
 
+            </table>
 
 		</div>	
 
@@ -45,10 +53,10 @@
 
 		</div>     
 		
-	  </div>
+	</div>
 	  
-  </div>  
+</div>  
 
-{{candidateList}}
+
 
 {% endblock %}   
