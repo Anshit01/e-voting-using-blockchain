@@ -20,7 +20,7 @@ cursor = connection.cursor()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', loggedin = isLoggedin())
 
 @app.route('/2')
 def newIndex():
@@ -29,8 +29,11 @@ def newIndex():
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'GET':
-        return render_template('register.html')
+        if isLoggedin():
+            return redirect('/')
+        return render_template('register.html', loggedin = False)
     else:
+        aadhar_id = request.form['aadhar_id']
         data = dict(request.form)
         key = create_user(data)
         if key == '':
@@ -40,8 +43,12 @@ def register():
 
 @app.route('/results')
 def results():
-    #TODO
-    return render_template('results.html')
+    candidateList = get_candidate_list()
+    i = 100
+    for candidate in candidateList:
+        candidate['votes'] = i
+        i += 50
+    return render_template('results.html', candidateList = candidateList, loggedin = isLoggedin())
 
 @app.route('/login', methods=['POST', 'GET'])
 def vote():
@@ -67,22 +74,24 @@ def vote():
             print(str(e))
             return render_template('error.html', error="Unable to connect to the database. Please try again later.")
     else:
-        return render_template('login.html', warning="")
+        if isLoggedin():
+            return redirect('/')
+        return render_template('login.html', loggedin = False)
 
 @app.route('/cast', methods=['GET', 'POST'])
 def cast():
-    # if 'name' in session and 'voter_id' in session:
+    # if isLoggedin():
     #     return render_template('cast.html')
     # else:
     #     return redirect('/login')
     candidateList = get_candidate_list()
-    return render_template('cast.html', candidateList=candidateList)
+    return render_template('cast.html', candidateList=candidateList, loggedin = isLoggedin())
 
 
 @app.route('/candidate_list')
 def candidate_list():
     candidateList = get_candidate_list()
-    return render_template('cdl.html', candidateList = candidateList)
+    return render_template('cdl.html', candidateList = candidateList, loggedin = isLoggedin())
 
 
 @app.route('/voter_list')
@@ -106,7 +115,13 @@ def voter_list():
             'name': row[1],
             'voted': row[2]
         })
-    return render_template('admin.html', voterList=voterList)
+    return render_template('admin.html', voterList=voterList, loggedin = isLoggedin())
+
+@app.route('/logout')
+def logout():
+    session.pop('name', None)
+    session.pop('voter_id', None)
+    return redirect('/')
 
 
 #################################################*Andriod App API Routes*#############################################
@@ -239,7 +254,7 @@ def get_candidate_list():
             'name': row[1],
             'party': row[2]
         })
-    return candidate_list
+    return candidateList
 
 
 def check_mysql_connection(cursor):
@@ -256,3 +271,7 @@ def check_mysql_connection(cursor):
             print("Error: " + str(e))
     globals()['cursor'] = cursor
 
+def isLoggedin() -> bool:
+    if 'name' in session and 'voter_id' in session:
+        return True
+    return False

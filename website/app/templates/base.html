@@ -29,6 +29,11 @@
                     <li><a class="nav-link" href="/results"> Live&nbsp;Results</a></li>
                     <li><a class="nav-link" href="/voter_list"> Admin</a></li>
                     <li><a class="nav-link" href="/candidate_list"> Candidate</a></li>
+                    {% if loggedin is defined and loggedin == true %}
+                    <li><a class="nav-link" href="/logout"> Logout</a></li>
+                    {% else %}
+                    <li><a class="nav-link" href="/login"> Login</a> </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
