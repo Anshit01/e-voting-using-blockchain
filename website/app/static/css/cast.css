@@ -27,7 +27,19 @@
     font-size: 20px;
 }
 
+.candidate-id {
+    display: none;
+}
+
 .btn:hover {
     background-color: #a90aff;
     color: #FFFFFF;
+}
+
+.modal-img {
+    width: 200px;
+}
+
+.img {
+    width: 100px;
 }
