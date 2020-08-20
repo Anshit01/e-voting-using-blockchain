@@ -34,8 +34,10 @@
                             <button type="submit" class="btn  btn-primary">Submit</button>
 
                         </form><br>
-
-                        <p id="warning">{{warning}}</p>
+                        
+                        {% if warning is defined %}
+                            <p id="warning">{{warning}}</p>
+                        {% endif %}
                         
                         <span>Doesn't have an account? </span>
                         <a href="/register" class="extra"><b>Register Here!</b></a>
