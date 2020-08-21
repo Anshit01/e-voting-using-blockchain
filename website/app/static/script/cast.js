@@ -36,8 +36,60 @@ function cancelKeyModal() {
 }
 
 function castVote() {
+    $('#key-modal').modal('hide')
+    $('#vote-status-modal').modal({backdrop: 'static', keyboard: false})
     var voter_id = $('#voter_id').html()
     var key = $('#key').val()
-    
+    servers = []
+    for(server of $(".server")){
+        servers.push(server.innerHTML)
+    }
+    data = {
+        'voter_id': voter_id,
+        'key': key,
+        'candidate_id': candidate_id
+    }
+    var success = 0
+    var error = ''
+    $.when(
+        $.post(servers[0] + '/cast_vote', data, function(response) {
+            if(response['status'] == 1){
+                success++
+            }else{
+                error = response['error']
+            }
+        }),
+        $.post(servers[1] + '/cast_vote', data, function(response) {
+            if(response['status'] == 1){
+                success++
+            }else{
+                error = response['error']
+            }
+        }),
+        $.post(servers[2] + '/cast_vote', data, function(response) {
+            if(response['status'] == 1){
+                success++
+            } else {
+                error = response['error']
+            }
+        })
+    ).done(
+        function(res1, res2, res3) {
+            if(success > servers.length / 2){
+                voteCastSuccess()
+            }else{
+                voteCastFailure(error)
+            }
+        }
+    )
 }
 
+function voteCastSuccess() {
+    $('#vote-status-modal').modal('hide')
+    $('#success-modal').modal()
+}
+
+function voteCastFailure(error) {
+    $('#vote-status-modal').modal('hide')
+    $('#failure-modal').modal()
+}
