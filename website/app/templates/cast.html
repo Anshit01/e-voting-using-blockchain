@@ -21,7 +21,7 @@
                 <p class="name">{{candidateList[i]['name']}}</p>
                 <p class="party"><b>{{candidateList[i]['party']}}</b></p>
                 <p class="candidate-id">{{candidateList[i]['candidate_id']}}</p>
-                <a data-toggle="modal" href="javascript:showModal({{i}});" class="btn btn-cast">Cast Vote</a>
+                <a href="javascript:showModal({{i}});" class="btn btn-cast">Cast Vote</a>
             </div>
        </div>
        {% endfor %}  
@@ -39,7 +39,29 @@
                 <img class="modal-img" src="static/images/party_logo/independent.jpg">
                <p id="modal-name"></p>
                <p id="modal-party"></p>
-               <p>Candidate ID: <span id="modal-candidate-id"></span></p>
+			   <p>Candidate ID: <span id="modal-candidate-id"></span></p>
+			   <a href="javascript:showConfirmModal();" class="btn btn-cast">Cast Vote</a>
+            </div>
+           
+        </div>
+        </div>
+	</div>
+	
+	<div class="modal fade" id="confirm-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            
+            <div class="modal-body text-center">
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <img class="confirm-img" src="static/images/party_logo/independent.jpg">
+               <p id="confirm-name"></p>
+               <p id="confirm-party"></p>
+			   <p>Candidate ID: <span id="confirm-candidate-id"></span></p>
+			   <a href="javascript:castVote();" class="btn btn-cast">Cast Vote</a>
+			   <a href="javascript:cancelVote();" class="btn btn-cancel">Cancel</a>
             </div>
            
         </div>
