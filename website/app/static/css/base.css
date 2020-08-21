@@ -6,7 +6,7 @@ body {
   .navbar {
     font-family: Montserrat, sans-serif;
     margin-bottom: 0;
-    background-color: #000000;
+    background-color: hsl(204 100% 5%);
     border: 0;
     font-size: 18px !important;
     letter-spacing: 3px;
@@ -31,4 +31,16 @@ body {
 
   .dash {
     margin-left: 4px;
+  }
+
+  .navbar-toggler-icon:hover {
+
+     text-decoration: none;
+     outline: none;
+
+  }
+
+  .navbar-toggler {
+    outline: none;
+    text-decoration: none;
   }
