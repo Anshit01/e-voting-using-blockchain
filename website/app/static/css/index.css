@@ -1,29 +1,59 @@
 
-  .jumbotron {
+  /**.jumbotron {
     background-color: #000000;
     color: #fff;
     padding: 100px 25px;
     font-family: Montserrat, sans-serif;
     border-radius: 0;
     margin-bottom: 80px;
+  }**/
+
+  .jumbotron {
+    background: hsl(204 100% 5%);
+    place-content: center;
+    font-family: system-ui;
+    font-size: min(200%, 5vmin);
+    border-radius: 0;
   }
 
 
   .btn {
-      border-color: #fca311;
+      border-color: hsl(204 100% 59%);
       background-color: transparent;
       font-size: 25px;
-      color: #fca311;
+      color: hsl(204 100% 59%);
       margin: 30px 2px;
   }
 
   .btn:hover {
-      background-color: #fca311;
+      background-color: hsl(204 100% 59%);
       color: #fff;
   }
 
+  /* .jumbo { */
+    /* font-size: 20px; */
+  /* } */
+
   .jumbo {
-    font-size: 20px;
+    background: linear-gradient(
+      to right, 
+      hsl(98 100% 62%), 
+      hsl(204 100% 59%)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+  }
+
+  .main-heading {
+    background: linear-gradient(
+      to right, 
+      hsl(98 100% 62%), 
+      hsl(204 100% 59%)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
   }
 
 /************************BODY**************************************************************/
@@ -41,8 +71,14 @@
  /*****************************************TIMELINE*****************************************/
 
  
+ .con-2 {
+   margin-top: 5%;
+ }
  
- 
+ #timeline {
+   font-size: 45px;
+   
+ }
  
  
  .timeline {
