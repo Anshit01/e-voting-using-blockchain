@@ -21,6 +21,10 @@ body {
       font-size: 25px;
   }
 
+  .navbar-toggler {
+    outline: none;
+  }
+
   .navbar-nav li a:hover {
     color: #fff !important;
   }
