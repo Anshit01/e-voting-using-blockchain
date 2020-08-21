@@ -3,10 +3,84 @@
 
 {% block custom_css %}
    <link rel="stylesheet" href="static/css/dash.css">
+   <!---fonts-->
+   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 
-   
+   <div class="container">
+       <div class="row">
+           <div class="col-md-4 text-center">
+               <h1 class="head"><b>Hello Shwetal</b></h1>
+
+               <h2 class="para"> <b>Your security our priority</b></h2><br>
+               <button type="button" class="btn btn-outline-secondary btn-lg ">Generate Key</button>
+               
+
+               <img src="static/images/dash.jpg" class="dash-pic"></img>
+
+               <p>Why to put your password at risk .Keep updating your password and get a new key. Updating password
+                   adds an extra layer of security to an already highly secure e-voting system. </p>
+
+           </div>
+
+           <div class="col-md-8 fill-form">
+               <h1><><b>Update Profile</b><></h1>
+
+              
+                        <form role="form" class="shift">
+
+                            <div class="form-group ">
+                                <label class=" col-form-label form-control-label"><b>Username</b></label>
+                                <div >
+                                    <input class="form-control" type="text" value="Dopa" />
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class=" col-form-label form-control-label"><b>Contact Number</b></label>
+                                <div >
+                                    <input class="form-control" type="text" value="9318161322" />
+                                </div>
+                            </div>
+                           
+                            <div class="form-group ">
+                                <label class=" col-form-label form-control-label"><b>Email</b></label>
+                                <div >
+                                    <input class="form-control" type="email" value="email@gmail.com" />
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class=" col-form-label form-control-label"><b>Password</b></label>
+                                <div>
+                                    <input class="form-control" type="password" value="11111122333" />
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class=" col-form-label form-control-label"><b>Confirm password</b></label>
+                                <div >
+                                    <input class="form-control" type="password" value="11111122333" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row ml-auto">
+                                <div >
+                                    <input type="reset" class="btn btn-outline-secondary" value="Cancel" />
+                                    <input type="button" class="btn btn-primary" value="Save Changes" />
+                                </div>
+                            </div>
+
+                        </form>
+
+                   
+            </div>
+
+           
+
+       </div>
+   </div>
 
 {% endblock %}
