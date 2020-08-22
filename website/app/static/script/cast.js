@@ -2,7 +2,6 @@ var name, party, candidate_id, imgSrc
 
 
 
-
 function showConfirmModal(i) {
     var candidate_div = $("#candidate-div-" + i)
     name = candidate_div.children('.name').html()
@@ -38,10 +37,11 @@ function cancelKeyModal() {
 
 function castVote() {
     $('#key-modal').modal('hide')
-    $('#key').val('')
+    $(window).bind('beforeunload', function() {return 'Voting in process. Please wait.'})
     $('#vote-status-modal').modal({backdrop: 'static', keyboard: false})
     var voter_id = $('#voter_id').html()
     var key = $('#key').val()
+    $('#key').val('')
     servers = []
     for(server of $(".server")){
         servers.push(server.innerHTML)
@@ -82,6 +82,7 @@ function castVote() {
             }else{
                 voteCastFailure(error)
             }
+            $(window).unbind('beforeunload')
         }
     )
 }
