@@ -34,12 +34,6 @@ function createGraph(partyList, voteList) {
             }]
         },
         options: {
-            title: {
-                display: true,
-                text: 'Vote Distribution',
-                fontSize: 22,
-                fontStyle: 'bold'
-            },
             aspectRatio: 0.75,
             legend: {
                 labels: {

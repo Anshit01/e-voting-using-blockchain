@@ -29,7 +29,6 @@
                 <ul class="navbar-nav mr-auto">
                     <li><a class="nav-link" href="/results"> <span class="d-md-none d-lg-inline">Live</span>&nbsp;Results</a></li>
                     <li><a class="nav-link" href="/voter_list">Voters</a></li>
-                    <li><a class="nav-link" href="/cast">Cast</a></li>
                     <li><a class="nav-link" href="/candidate_list"> Candidates</a></li>
                     
                 </ul>
@@ -41,8 +40,10 @@
                         <i class="fa fa-user fa-lg" aria-hidden="true"></i>
                         <span class="dash d-md-none d-lg-inline">My&nbsp;Dashboard</span></a>
                     </li>
+                    <li><a class="nav-link" href="/cast"><span class="d-md-none d-lg-inline">Cast</span>&nbsp;Vote</a></li>
                     <li><a class="nav-link" href="/logout"> Logout</a></li>
                     {% else %}
+                    <li><a class="nav-link" href="/register">Register</a></li>
                     <li><a class="nav-link" href="/login"> Login</a> </li>
                     {% endif %}
 

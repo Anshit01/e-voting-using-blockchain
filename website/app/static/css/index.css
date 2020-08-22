@@ -87,6 +87,7 @@
     list-style: none;
     padding: 20px 0 20px;
     position: relative;
+    margin-bottom: 0;
   }
   
   .timeline:before {
@@ -289,10 +290,8 @@
 {
   display:inline-block
 }
-.site-footer .social-icons
-{
-  text-align:right
-}
+
+
 .site-footer .social-icons a
 {
   width:40px;
@@ -325,16 +324,24 @@
     text-align:center
   }
 }
+
+.dev-name {
+  display: inline-block;
+  width: 60px;
+}
+
 .social-icons
 {
   padding-left:0;
-  margin-bottom:0;
-  list-style:none
+  /* margin-bottom:0; */
+  list-style:none;
+  display: inline;
+  white-space: nowrap;;
 }
 .social-icons li
 {
   display:inline-block;
-  margin-bottom:4px
+  margin-bottom:4px;
 }
 .social-icons li.title
 {
@@ -379,14 +386,5 @@
 .social-icons a.github:hover
 {
   background-color:#0ead69
-}
-@media (max-width:767px)
-{
-  .social-icons li.title
-  {
-    display:block;
-    margin-right:0;
-    font-weight:600
-  }
 }
   
