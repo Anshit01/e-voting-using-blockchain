@@ -40,7 +40,7 @@ function createGraph(partyList, voteList) {
                 fontSize: 22,
                 fontStyle: 'bold'
             },
-            aspectRatio: 1.1,
+            aspectRatio: 0.75,
             legend: {
                 labels: {
                     fontSize: 16
