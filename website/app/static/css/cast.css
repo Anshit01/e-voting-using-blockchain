@@ -2,15 +2,20 @@
     width:20%;
 }
 
+.body {
+    background-color: #22577a;
+}
+
 .btn-cast {
-    background-color: #8e44ad;
+    background-color: #57cc99;
+}
     border-radius: 25px;
     color: #FFFFFF;
     font-size: 20px;
 }
 
 .candidate-div {
-    background-color: #f8ebff;
+    background-color: #edfdee;
     margin-top: 3%;
     padding-top: 4%;
     padding-bottom: 4%;
@@ -27,8 +32,12 @@
     font-size: 20px;
 }
 
+.candidate-id {
+    display: none;
+}
+
 .btn-cast:hover {
-    background-color: #a90aff;
+    background-color: #57cc99;
     color: #FFFFFF;
 }
 
