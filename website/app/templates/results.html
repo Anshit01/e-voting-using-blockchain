@@ -3,6 +3,8 @@
 
 {% block custom_css %}
    <link rel="stylesheet" href="static/css/results.css">
+   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+   <script src="static/script/results.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +15,7 @@
 
     <div class="row">
 		  
-		<div class="col-md-6  tab">
+		<div class="col-12 col-lg-6  tab">
 			
 			<table class="table">
 
@@ -32,7 +34,7 @@
 
 					<tr>
 
-						<td>{{i}}</td>
+						<td>{{i+1}}</td>
 						<td>{{candidateList[i]['name']}}</td>
 						<td>{{candidateList[i]['party']}}</td>
 						<td>{{candidateList[i]['votes']}}</td>
@@ -47,16 +49,33 @@
 
 		</div>	
 
-		<div class="col-md-6 pie">
+		<div class="col-12 col-lg-6 pie">
 
-             
+             <canvas id="pie-chart">
+
+             </canvas>
 
 		</div>     
 		
 	</div>
 	  
-</div>  
+</div>
 
+
+<script>
+
+    var partyList = []
+    var voteList = []
+
+    {% for candidate in candidateList %}
+    {% if candidate['votes'] != 0 %}
+    partyList.push('{{candidate['party']}}')
+    voteList.push('{{candidate['votes']}}')
+    {% endif %}
+    {% endfor %}
+    createGraph(partyList, voteList)
+
+</script>
 
 
 {% endblock %}   

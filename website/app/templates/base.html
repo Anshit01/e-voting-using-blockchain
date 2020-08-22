@@ -18,7 +18,7 @@
 
 <body>
 
-    <nav class="navbar navbar-dark fixed-top navbar-expand-lg">
+    <nav class="navbar navbar-dark fixed-top navbar-expand-md">
        
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
@@ -36,7 +36,10 @@
                 <ul class=" navbar-nav ml-auto">
                    
                     {% if loggedin is defined and loggedin == true %}
-                    <li><a class="nav-link" href="/dashboard"><i class="fa fa-user fa-lg" aria-hidden="true"></i><span class="dash" href="#">My&nbsp;Dashboard</span></a></li>
+                    <li><a class="nav-link" href="/dashboard">
+                        <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                        <span class="dash d-md-none d-lg-inline" href="#">My&nbsp;Dashboard</span></a>
+                    </li>
                     <li><a class="nav-link" href="/logout"> Logout</a></li>
                     {% else %}
                     <li><a class="nav-link" href="/login"> Login</a> </li>
