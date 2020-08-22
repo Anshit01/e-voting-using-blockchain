@@ -1,6 +1,6 @@
 .head {
     font-size: 55px;
-    color: #da627d;
+    color: #22577a;
     margin-top: 7%;
     margin-bottom: 5%;
     font-weight: 800;
@@ -27,13 +27,13 @@ h1 {
 }
 
 .btn-primary {
-    background-color: #d0395a;
-    border-color: #d0395a;
+    background-color: #47c2c2;
+    border-color: #47c2c2;
 }
 
 .btn-primary:hover {
-    background-color: #d0395a;
-    border-color: #d0395a;
+    background-color: #47c2c2;
+    border-color: #47c2c2;
 }
 
 .shift {
@@ -41,7 +41,7 @@ h1 {
 }
 
 .fill-form {
-    background-color: #fdf5ec;
+    background-color: #f0fafa;
     margin-top: 3%;
     border-radius: 20px;
 }

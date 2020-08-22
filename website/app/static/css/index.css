@@ -20,15 +20,15 @@
 
 
   .btn {
-      border-color: hsl(204 100% 59%);
+      border-color: #80ed99;
       background-color: transparent;
       font-size: 25px;
-      color: hsl(204 100% 59%);
+      color: #80ed99;
       margin: 30px 2px;
   }
 
   .btn:hover {
-      background-color: hsl(204 100% 59%);
+      background-color: #80ed99;
       color: #fff;
   }
 
