@@ -58,6 +58,7 @@
 						<p>Candidate ID: <span id="key-candidate-id"></span></p>
 						<label for="key">Enter your private key to confirm your vote:</label>
 						<input type="text" id="key" placeholder="Enter your 32 character long private key">
+						<p>Forgot the key? <a href="/dashboard"><span>Generate new key here</span></a></p>
 						<br>
 						<a href="javascript:castVote();" class="btn btn-primary">Cast Vote</a>
 						<a href="javascript:cancelKeyModal();" class="btn btn-secondary btn-cancel">Cancel</a>
@@ -72,6 +73,7 @@
 					<div class="modal-body text-center">
 						<div class="spinner-border text-secondary modal-status"></div>
 						<p>Posting your vote...</p>
+						<p>Please have patience. This may take upto a minute to complete all security checks and cast your vote securely.</p>
 					</div>
 				</div>
 			</div>
@@ -94,6 +96,7 @@
 					<div class="modal-body text-center">
 						<div class="fa fa-times-circle-o fa-5x modal-status"></div>
 						<p>Failed!</p>
+						<p id="failure-error"></p>
 					</div>
 				</div>
 			</div>
