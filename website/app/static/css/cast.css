@@ -6,8 +6,9 @@
     background-color: #22577a;
 }
 
-.btn {
+.btn-cast {
     background-color: #57cc99;
+}
     border-radius: 25px;
     color: #FFFFFF;
     font-size: 20px;
@@ -35,15 +36,30 @@
     display: none;
 }
 
-.btn:hover {
+.btn-cast:hover {
     background-color: #57cc99;
     color: #FFFFFF;
 }
 
-.modal-img, .confirm-img {
+.confirm-img, .key-img {
     width: 200px;
 }
 
 .img {
     width: 100px;
+}
+
+#key {
+    width: 300px;
+    margin: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal-status {
+    height: 200px;
+    width: 200px;
+    margin: 100px;
 }

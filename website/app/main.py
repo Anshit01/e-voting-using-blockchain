@@ -92,7 +92,7 @@ def vote():
 def cast():
     if isLoggedin():
         candidateList = get_candidate_list()
-        return render_template('cast.html', candidateList=candidateList, loggedin = True)
+        return render_template('cast.html', candidateList=candidateList, loggedin = True, username = session['name'], voter_id = session['voter_id'], blockchain_servers = blockchain_servers)
     else:
         return redirect('/login')
 
@@ -196,7 +196,7 @@ def api_voter_check():
         verified = result[2]
         if result[0] == key_hash:
             if verified == 1:
-                if voted == 1:
+                if voted == 0:
                     return {"status": 1}
                 else:
                     error = "Already Voted."
