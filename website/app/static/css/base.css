@@ -29,6 +29,10 @@ body {
     color: #fff !important;
   }
 
+  .navbar-nav > li {
+    white-space: nowrap;
+  }
+
   .dash {
     margin-left: 4px;
   }

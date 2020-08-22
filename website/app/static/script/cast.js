@@ -33,10 +33,12 @@ function cancelConfirmModal() {
 
 function cancelKeyModal() {
     $("#key-modal").modal('hide')
+    $('#key').val('')
 }
 
 function castVote() {
     $('#key-modal').modal('hide')
+    $('#key').val('')
     $('#vote-status-modal').modal({backdrop: 'static', keyboard: false})
     var voter_id = $('#voter_id').html()
     var key = $('#key').val()
@@ -91,5 +93,6 @@ function voteCastSuccess() {
 
 function voteCastFailure(error) {
     $('#vote-status-modal').modal('hide')
+    $('#failure-error').html(error)
     $('#failure-modal').modal()
 }

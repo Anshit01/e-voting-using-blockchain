@@ -30,7 +30,7 @@ def newIndex():
 @app.route('/dashboard')
 def dashboard():
     if isLoggedin():
-        return render_template("dashboard.html", loggedin = True)
+        return render_template("dashboard.html", loggedin = True, username = session['name'])
     else:
         return redirect("/")
 
