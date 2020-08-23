@@ -1,4 +1,5 @@
 from flask import Flask, request
+import atexit
 from flask_cors import CORS
 import requests
 import json
@@ -45,7 +46,9 @@ def get_result():
             result[candidate_id] = 1
     return result
         
-        
 
-if(__name__ == '__main__'):
-    app.run(debug=True)
+def kill_gracefully():
+    #TODO
+    print('gracefully kiled.')
+
+atexit.register(kill_gracefully)
