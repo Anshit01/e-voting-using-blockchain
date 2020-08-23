@@ -21,9 +21,10 @@ body {
       font-size: 25px;
   }
 
-  .navbar-toggler {
-    outline: none;
-  }
+  .navbar-toggler:focus, .navbar-toggler:active:focus, .btn.active:focus{
+    outline:none;
+    box-shadow:none;
+}
 
   .navbar-nav li a:hover {
     color: #fff !important;
