@@ -62,3 +62,14 @@
     width: 200px;
     margin: 100px 0;
 }
+
+.btn-primary {
+    background-color: #22577a;
+    border-color: #22577a;
+}
+
+.btn-primary:hover {
+    background-color: #22577a;
+    border-color: #22577a;
+}
+
