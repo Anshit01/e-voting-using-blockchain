@@ -19,12 +19,12 @@
 			
 			<table class="table">
 
-                <thead>
+                <thead class="mains">
 				   
 					<th>Sr.No.</th>
 					<th>Name</th>
-					<th>Political Party</th>
-					<th>Total Votes</th>
+					<th>Party</th>
+					<th>Votes</th>
 
 				</thead>
 
@@ -32,7 +32,7 @@
 
 					{% for i in range(candidateList|length) %}
 
-					<tr>
+					<tr class="advanced">
 
 						<td>{{i+1}}</td>
 						<td>{{candidateList[i]['name']}}</td>
@@ -49,7 +49,7 @@
 
 		</div>	
 
-		<div class="col-12 order-md-first order-lg-last col-lg-6 pie">
+		<div class="col-10 order-md-first order-lg-last col-lg-6 pie text-center">
 
              <canvas id="pie-chart">
 

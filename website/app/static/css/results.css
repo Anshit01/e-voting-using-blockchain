@@ -1,7 +1,20 @@
 .tab {
-    margin-top: 3%;
+    margin-top: 5%;
 }
 
 .whole {
-    margin-top: 2%;
+    margin-top: 7%;
+    
+}
+
+.advanced {
+    background-color: #edfdee;
+}
+
+.mains {
+    background-color: #80ed99;
+}
+
+#pie-chart {
+    text-align: center;
 }
