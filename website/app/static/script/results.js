@@ -34,7 +34,7 @@ function createGraph(partyList, voteList) {
             }]
         },
         options: {
-            aspectRatio: 0.75,
+            aspectRatio: 1,
             legend: {
                 labels: {
                     fontSize: 16

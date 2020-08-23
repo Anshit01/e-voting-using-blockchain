@@ -1,6 +1,14 @@
 var name, party, candidate_id, imgSrc
 
 
+window.addEventListener('load', function() {
+    var images = $('.img')
+    for(image of images){
+        if(!image.complete || image.naturalHeight === 0){
+            image.setAttribute('src', 'static/images/party_logo/Independent.png')
+        }
+    }
+})
 
 function showConfirmModal(i) {
     var candidate_div = $("#candidate-div-" + i)
@@ -12,7 +20,7 @@ function showConfirmModal(i) {
     $('#confirm-name').html(name)
     $('#confirm-party').html(party)
     $('#confirm-candidate-id').html(candidate_id)
-    $('#confirm-ing').attr('src', imgSrc)
+    $('#confirm-img').attr('src', imgSrc)
     confirmModal.modal()
 }
 
@@ -22,7 +30,7 @@ function showKeyModal() {
     $('#key-name').html(name)
     $('#key-party').html(party)
     $('#key-candidate-id').html(candidate_id)
-    $('#key-ing').attr('src', imgSrc)
+    $('#key-img').attr('src', imgSrc)
     keyModal.modal({backdrop: 'static', keyboard: false})
 }
 
