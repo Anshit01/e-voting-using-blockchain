@@ -9,6 +9,7 @@ verify_ssl = true
 flask = "*"
 gunicorn = "*"
 pymysql = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
