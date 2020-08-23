@@ -11,13 +11,13 @@
 {% block content %}
 
 <div class="container">
-	<div class="row row-eq-height">
+	<div class="row">
 
 
 		{% for i in range(candidateList|length) %}
 		<div class="col-sm-6 col-md-4 text-center">
 			<div class="candidate-div" id="candidate-div-{{i}}">
-				<img class="img" src="static/images/party_logo/{{candidateList[i]['party']}}.png" class="logo"></img>
+				<img class="img" src="static/images/party_logo/independent.jpg" class="logo"></img>
 				<p class="name">{{candidateList[i]['name']}}</p>
 				<p class="party"><b>{{candidateList[i]['party']}}</b></p>
 				<p class="candidate-id hidden">{{candidateList[i]['candidate_id']}}</p>
@@ -34,7 +34,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<img id="confirm-img" src="static/images/party_logo/Independent.png">
+						<img class="confirm-img" src="static/images/party_logo/independent.jpg">
 						<p id="confirm-name"></p>
 						<p id="confirm-party"></p>
 						<p>Candidate ID: <span id="confirm-candidate-id"></span></p>
@@ -52,7 +52,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<img id="key-img" src="static/images/party_logo/Independent.png">
+						<img class="key-img" src="static/images/party_logo/independent.jpg">
 						<p id="key-name"></p>
 						<p id="key-party"></p>
 						<p>Candidate ID: <span id="key-candidate-id"></span></p>
@@ -84,7 +84,7 @@
 				<div class="modal-content">
 					<div class="modal-body text-center">
 						<div class="fa fa-check-circle-o fa-5x text-secondary modal-status"></div>
-						<p>Your vote was successfully posted!</p>
+						<p class="successfully">Your vote was successfully posted!</p>
 					</div>
 				</div>
 			</div>
@@ -94,8 +94,10 @@
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-body text-center">
-						<div class="fa fa-times-circle-o fa-5x modal-status"></div>
-						<p>Failed!</p>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<p class="failed">Failed!</p>
 						<p id="failure-error"></p>
 					</div>
 				</div>
