@@ -79,3 +79,63 @@
     border-color: #22577a;
 }
 
+.failed {
+                                      
+    font-size: 30px;
+    margin-top: 60px;
+}
+
+.added-text {
+    font-size: 15px;
+    margin-top: 20px;
+} 
+
+.successfully {
+    font-size: 30px;
+    margin-top: 100px;
+}
+
+.tick {
+    width: 30%;
+}
+
+.back-body {
+    background-color: #2ecc71;
+    padding: 30px 30px;
+    margin: -15.75px ;
+}
+
+.btn-1 {
+    border-radius: 20px;
+    border-color: #2ecc71;
+    margin-top: 30px;
+    color:#2ecc71;
+}
+
+.btn-1:hover {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+
+.front-body {
+    background-color: #c0392b;
+    padding: 35px 30px;
+    margin: -15.75px;
+}
+
+.alert {
+    width: 35%;
+}
+
+.btn-2{
+    border-radius: 20px;
+    border-color: #c0392b;
+    margin-top: 30px;
+    color: #c0392b;
+}
+
+.btn-2:hover {
+   background-color: #c0392b;
+   color: #fff;
+}

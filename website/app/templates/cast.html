@@ -82,9 +82,12 @@
 		<div class="modal fade" id="success-modal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
-					<div class="modal-body text-center">
-						<div class="fa fa-check-circle-o fa-5x text-secondary modal-status"></div>
+					<div class="modal-body text-center additional">
+						<div class="back-body">
+                             <img class="tick" src="static/images/1x/Asset 1.png"></img>
+						</div>
 						<p class="successfully">Your vote was successfully posted!</p>
+						<a href="/cast" class="btn btn-1 ">DONE</a>
 					</div>
 				</div>
 			</div>
@@ -93,12 +96,14 @@
 		<div class="modal fade" id="failure-modal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
-					<div class="modal-body text-center">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<p class="failed">Failed!</p>
-						<p id="failure-error"></p>
+					<div class="modal-body text-center add-2">
+						<div class="front-body">
+							<img class="alert" src="static/images/1x/alert.png"></img>
+					    </div>
+						<p class="failed">Incorrect Key</p>
+						<p class="added-text">An error has occured while submitting the vote</p>
+                        <a href="/cast" class="btn btn-2 ">CANCEL</a>
+
 					</div>
 				</div>
 			</div>
