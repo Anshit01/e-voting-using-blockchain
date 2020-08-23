@@ -20,7 +20,7 @@ function showConfirmModal(i) {
     $('#confirm-name').html(name)
     $('#confirm-party').html(party)
     $('#confirm-candidate-id').html(candidate_id)
-    $('#confirm-img').attr('src', imgSrc)
+    $('.confirm-img').attr('src', imgSrc)
     confirmModal.modal()
 }
 
@@ -30,7 +30,7 @@ function showKeyModal() {
     $('#key-name').html(name)
     $('#key-party').html(party)
     $('#key-candidate-id').html(candidate_id)
-    $('#key-img').attr('src', imgSrc)
+    $('.key-img').attr('src', imgSrc)
     keyModal.modal({backdrop: 'static', keyboard: false})
 }
 

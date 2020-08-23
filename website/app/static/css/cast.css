@@ -102,7 +102,8 @@
 .back-body {
     background-color: #2ecc71;
     padding: 30px 30px;
-    margin: -15.75px ;
+    margin: -16px ;
+    border-radius: 3px 3px 0 0;
 }
 
 .btn-1 {
@@ -121,7 +122,8 @@
 .front-body {
     background-color: #c0392b;
     padding: 35px 30px;
-    margin: -15.75px;
+    margin: -16px;
+    border-radius: 3px 3px 0 0;
 }
 
 .alert {
