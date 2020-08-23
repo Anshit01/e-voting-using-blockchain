@@ -4,6 +4,8 @@
 
 {% block custom_css %}
 <link rel="stylesheet" href="static/css/key.css">
+<!---fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -11,12 +13,13 @@
     <div class="container">
         <div class="row">
             <div class="col-10 mx-auto text-center">
-                <h4>Your Voter ID</h4>
-                <h3>{{voter_id}}</h3>
-                <h4>Your Private Key</h4>
-                <h3>{{key}}</h3>
+                <h2 class="vote">Your Voter ID</h2>
+                <p class="small">{{voter_id}}</p>
+                <h2 class="key">Your Private Key</h2>
+                <p class="small">{{key}}</p>
                 <hr>
-                <p>Please keep it safe!</p>
+                <p>Your private key is solely your responsibility. Please keep it safe and keep 
+                    regenerating it.</p>
             </div>
         </div>
     </div>
