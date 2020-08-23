@@ -1,6 +1,8 @@
 import json
 import hashlib
 import random
+import requests
+import threading
 from flask import Flask, render_template, request, redirect, session
 import pymysql
 
@@ -56,7 +58,10 @@ def register():
 
 
 @app.route('/results')
-def results():
+def results():                  ##################TODO
+    candidateList2 = get_results()
+    for candidate in candidateList2:
+        print(candidate['votes'])
     candidateList = get_candidate_list()
     i = 100
     for candidate in candidateList:
@@ -271,6 +276,38 @@ def get_candidate_list():
         })
     return candidateList
 
+
+def get_results():
+    blockchainResponse = []
+    def makeReq(server):
+        blockchainResponse.append(requests.get(server + '/get_result').text)
+    reqs = []
+    for server in blockchain_servers:
+        reqs.append(threading.Thread(target=makeReq, args=[server]))
+        reqs[-1].start()
+    for req in reqs:
+        req.join()
+    similarResponse = {}
+    for res in blockchainResponse:
+        if res in similarResponse:
+            similarResponse[res] += 1
+        else:
+            similarResponse[res] = 1
+    resultStr = ''
+    maxCount = 0
+    for res in similarResponse:
+        if similarResponse[res] > maxCount:
+            maxCount = similarResponse[res]
+            resultStr = res
+    result = json.loads(resultStr)
+    
+    candidateList = get_candidate_list()
+    for candidate in candidateList:
+        if str(candidate['candidate_id']) in result:
+            candidate['votes'] = result[str(candidate['candidate_id'])]
+        else:
+            candidate['votes'] = 0
+    return candidateList
 
 def check_mysql_connection(cursor):
     try:
