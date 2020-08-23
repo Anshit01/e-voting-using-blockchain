@@ -11,13 +11,13 @@
 {% block content %}
 
 <div class="container">
-	<div class="row row-eq-height">
+	<div class="row">
 
 
 		{% for i in range(candidateList|length) %}
 		<div class="col-sm-6 col-md-4 text-center">
 			<div class="candidate-div" id="candidate-div-{{i}}">
-				<img class="img" src="static/images/party_logo/{{candidateList[i]['party']}}.png" class="logo"></img>
+				<img class="img" src="static/images/party_logo/independent.jpg" class="logo"></img>
 				<p class="name">{{candidateList[i]['name']}}</p>
 				<p class="party"><b>{{candidateList[i]['party']}}</b></p>
 				<p class="candidate-id hidden">{{candidateList[i]['candidate_id']}}</p>
@@ -34,7 +34,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<img id="confirm-img" src="static/images/party_logo/Independent.png">
+						<img class="confirm-img" src="static/images/party_logo/independent.jpg">
 						<p id="confirm-name"></p>
 						<p id="confirm-party"></p>
 						<p>Candidate ID: <span id="confirm-candidate-id"></span></p>
@@ -52,7 +52,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<img id="key-img" src="static/images/party_logo/Independent.png">
+						<img class="key-img" src="static/images/party_logo/independent.jpg">
 						<p id="key-name"></p>
 						<p id="key-party"></p>
 						<p>Candidate ID: <span id="key-candidate-id"></span></p>
@@ -82,9 +82,12 @@
 		<div class="modal fade" id="success-modal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
-					<div class="modal-body text-center">
-						<div class="fa fa-check-circle-o fa-5x text-secondary modal-status"></div>
-						<p>Your vote was successfully posted!</p>
+					<div class="modal-body text-center additional">
+						<div class="back-body">
+                             <img class="tick" src="static/images/1x/Asset 1.png"></img>
+						</div>
+						<p class="successfully">Your vote was successfully posted!</p>
+						<a href="/cast" class="btn btn-1 ">DONE</a>
 					</div>
 				</div>
 			</div>
@@ -93,10 +96,14 @@
 		<div class="modal fade" id="failure-modal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
-					<div class="modal-body text-center">
-						<div class="fa fa-times-circle-o fa-5x modal-status"></div>
-						<p>Failed!</p>
-						<p id="failure-error"></p>
+					<div class="modal-body text-center add-2">
+						<div class="front-body">
+							<img class="alert" src="static/images/1x/alert.png"></img>
+					    </div>
+						<p class="failed">Incorrect Key</p>
+						<p class="added-text">An error has occured while submitting the vote</p>
+                        <a href="/cast" class="btn btn-2 ">CANCEL</a>
+
 					</div>
 				</div>
 			</div>
