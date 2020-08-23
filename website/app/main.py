@@ -7,6 +7,7 @@ import pymysql
 from app import config
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 #############WARNING: remove in production
 app.secret_key = config.appSecretKey
 
 blockchain_servers = [

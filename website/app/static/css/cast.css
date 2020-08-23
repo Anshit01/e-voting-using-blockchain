@@ -11,9 +11,15 @@
     border-radius: 25px;
     color: #FFFFFF;
     font-size: 20px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .candidate-div {
+    height: 330px;
+    position: relative;
     background-color: #edfdee;
     margin-top: 3%;
     padding-top: 4%;

@@ -2,55 +2,58 @@
 {% block title %}Voter's List{% endblock %}
 
 {% block custom_css %}
-   <link rel="stylesheet" href="static/css/admin.css">
+<link rel="stylesheet" href="static/css/admin.css">
 
-   <!---fonts-->
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+<!---fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 
 {% endblock %}
 
 {% block content %}
 
-   <div class="container">
+<div class="container">
 
-       <div class="row">
+    <div class="row">
 
-           <div class="col-10 mx-auto col-sm-10 tab">
+        <div class="col-10 mx-auto col-sm-10 tab">
 
-                 <h1>Voter List</h1><br>
+            <h1>Voter List</h1><br>
 
-                 <table class="table">
+            <table class="table">
 
-                      <thead class="thread-dec">
+                <thead class="thread-dec">
 
-                          <tr>
+                    <tr>
 
-                            <th scope="col">Voter ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Voted</th>
-                            
-                          </tr>
+                        <th scope="col">Voter ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Voted</th>
 
-                      </thead>
+                    </tr>
 
-                      <tbody>
+                </thead>
 
-                          {% for i in range(voterList|length) %}
+                <tbody>
 
-                          <tr class="row-down">
-                           
-                            <td>{{ voterList[i]['voter_id'] }}</td>
-                            <td>{{ voterList[i]['name'] }}</td>
-                            <td>{{ voterList[i]['voted'] }}</td>
+                    {% for i in range(voterList|length) %}
 
+                    <tr class="row-down">
 
-                          </tr>
-
-                          {% endfor %}
-
-                      </tbody>
-                </table>
+                        <td>{{ voterList[i]['voter_id'] }}</td>
+                        <td>{{ voterList[i]['name'] }}</td>
+                        <td>{{ voterList[i]['voted'] }}</td>
 
 
-{% endblock %}                
+                    </tr>
 
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
