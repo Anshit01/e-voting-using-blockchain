@@ -21,7 +21,7 @@ body {
       font-size: 25px;
   }
 
-  .navbar-toggler:focus, .navbar-toggler:active:focus, .btn.active:focus{
+  .navbar-toggler:focus, .navbar-toggler:active:focus, .navbar-toggler.active:focus{
     outline:none;
     box-shadow:none;
 }

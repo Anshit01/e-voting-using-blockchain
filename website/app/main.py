@@ -27,6 +27,9 @@ def index():
 def newIndex():
     return render_template('index2.html')
 
+@app.route('/key_test')
+def key_test():
+    return render_template('key.html', voter_id = 100000000031, key = 'akjdshiuh874r78h23r82938h3rh')
 
 @app.route('/dashboard')
 def dashboard():
@@ -47,7 +50,9 @@ def register():
         key = create_user(data)
         if key == '':
             return render_template('error.html', error='Unable to create Voter ID. Possibly a voter ID already exists with the same Aadhar ID.')
-        return render_template('key.html', key=key)
+        cursor.execute("select voter_id from voter_list where aadhar_id = %s", (aadhar_id))
+        voter_id = cursor.fetchone()[0]
+        return render_template('key.html', voter_id = voter_id, key=key)
 
 
 @app.route('/results')
