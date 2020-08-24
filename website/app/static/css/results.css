@@ -45,7 +45,7 @@ body {
 .load-screen {
     height: 100vh;
     width: 100vw;
-    background: #00CCFF;
+    background: hsl(204 100% 5%);
     text-align: center;
   }
   .dots-container{
@@ -57,7 +57,7 @@ body {
   }
   .dots{
     animation: bounce 1.5s infinite linear;
-    background: #fff;
+    background: hsl(204 100% 59%);
     border-radius: 50%;
     display: inline-block;
     height: 20px;
