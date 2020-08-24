@@ -2,16 +2,16 @@
     width:20%;
 }
 
-.body {
-    background-color: #22577a;
+body {
+    background-color: #14213d; 
 }
 
 .btn-cast {
-    background-color: #57cc99;
+    background-color: #197278;
     border-radius: 25px;
     color: #FFFFFF;
     font-size: 20px;
-    position: absolute;
+    position: absolute; 
     bottom: 30px;
     left: 50%;
     transform: translate(-50%, 0);
@@ -20,7 +20,7 @@
 .candidate-div {
     height: 330px;
     position: relative;
-    background-color: #edfdee;
+    background-color: #fff;
     margin-top: 3%;
     padding-top: 4%;
     padding-bottom: 4%;
@@ -141,3 +141,35 @@
    background-color: #c0392b;
    color: #fff;
 }
+
+
+.submit{
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 0.1% 2%;
+    outline-color: 0;
+    text-shadow: none;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: px;
+}
+
+.search-place {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 0.3% 6%;
+    outline-color: 0;
+    text-decoration: none;
+    
+}
+
+input[type=text] {
+    text-align: center;
+    
+}
+
+::placeholder {
+    
+    font-size: 20px;
+}
+

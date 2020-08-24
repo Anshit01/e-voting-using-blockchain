@@ -10,6 +10,14 @@
 
 {% block content %}
 
+
+<div class="container text-center search-bar">
+	<form action="#" class="search">
+	  <input type="text" placeholder="Search" name="search" class="search-place">
+	  <button type="submit" class="submit">Submit</button>
+	</form>
+</div>
+
 <div class="container">
 	<div class="row">
 
@@ -26,7 +34,7 @@
 		</div>
 		{% endfor %}
 
-
+		
 		<div class="modal fade" id="confirm-modal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
