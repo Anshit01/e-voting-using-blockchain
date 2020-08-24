@@ -14,3 +14,13 @@ class Block:
         lst = [self.index, self.candidate_id, self.timestamp, self.proof, self.previous_hash]
         s = str(lst).encode()
         return hashlib.sha256(s).hexdigest()
+
+    def toDict(self):
+        return {
+            'index': self.index,
+            'candidate_id': self.candidate_id,
+            'timestamp': self.timestamp,
+            'proof': self.proof,
+            'previous_hash': self.previous_hash,
+            'hash': self.hash
+        }
