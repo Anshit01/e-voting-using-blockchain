@@ -3,7 +3,7 @@ import hashlib
 import random
 import requests
 import threading
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 import pymysql
 
 from app import config
@@ -58,16 +58,8 @@ def register():
 
 
 @app.route('/results')
-def results():                  ##################TODO
-    candidateList2 = get_results()
-    for candidate in candidateList2:
-        print(candidate['votes'])
-    candidateList = get_candidate_list()
-    i = 100
-    for candidate in candidateList:
-        candidate['votes'] = i
-        i += 50
-    return render_template('results.html', candidateList = candidateList, loggedin = isLoggedin())
+def results():
+    return render_template('results.html', loggedin = isLoggedin())
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -171,10 +163,13 @@ def create_user_route():
 @app.route('/get_candidates')
 def get_candidates():
     candidateList = get_candidate_list()
-    return candidateList
+    return jsonify(candidateList)
 
 ######################################################*Common*###########################################################
 
+@app.route('/api/get_result')
+def get_result_api():
+    return jsonify(get_results())
 
 
 ############################################*Blockchain server API routes*###############################################

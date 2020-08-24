@@ -9,6 +9,17 @@
 
 {% block content %}
 
+<div class="load-screen">
+	<div class="dots-container">
+		<div class="dots"></div>
+		<div class="dots"></div>
+		<div class="dots"></div>
+		<div class="dots"></div>
+		<div class="dots"></div>
+	</div>
+    <p class="loading-caption">Loading the Lives Poll Results for you...</p>
+</div>
+
 <div class="container whole">
     
 	<h1>Voting Statistics</h1>
@@ -28,20 +39,9 @@
 
 				</thead>
 
-				<tbody>
+				<tbody id="table-body">
 
-					{% for i in range(candidateList|length) %}
-
-					<tr class="advanced">
-
-						<td>{{i+1}}</td>
-						<td>{{candidateList[i]['name']}}</td>
-						<td>{{candidateList[i]['party']}}</td>
-						<td>{{candidateList[i]['votes']}}</td>
-
-					</tr>
 					
-					{% endfor %}
 					
 				</tbody>
 
@@ -64,16 +64,9 @@
 
 <script>
 
-    var partyList = []
-    var voteList = []
+	fetchResult()
 
-    {% for candidate in candidateList %}
-    {% if candidate['votes'] != 0 %}
-    partyList.push('{{candidate['party']}}')
-    voteList.push('{{candidate['votes']}}')
-    {% endif %}
-    {% endfor %}
-    createGraph(partyList, voteList)
+    
 
 </script>
 

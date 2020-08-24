@@ -13,6 +13,28 @@ var colorList = [
     '#a53860',
 ]
 
+function fetchResult(){
+    $.get('/api/get_result').done(function(res) {
+        $('.load-screen').fadeOut()
+        $('.whole').fadeIn()
+        var partyList = []
+        var voteList = []
+        var tableStr = ""
+        var i = 1
+        for(candidate of res){
+            if(candidate['votes'] != 0){
+                partyList.push(candidate['party'])
+                voteList.push(candidate['votes'])
+            }
+            tableStr += " <tr> <td>" + i + "</td> <td>" + candidate['name'] + "</td> <td>" +
+            candidate['party'] + "</td> <td>" + candidate['votes'] + "</td> </tr>"
+            i++
+        }
+        document.getElementById('table-body').innerHTML += tableStr
+        createGraph(partyList, voteList)
+    })
+}
+
 function createGraph(partyList, voteList) {
     var ctx = document.getElementById('pie-chart').getContext('2d')
     var pieChart = new Chart(ctx, {
