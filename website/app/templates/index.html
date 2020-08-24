@@ -10,13 +10,19 @@
 
 <div class="jumbotron text-center">
 
-    <h1>Welcome to E-Voting Portal</h1> <br>
+    <h1 class="main-heading">Welcome to E-Voting Portal</h1> <br>
     <p class="jumbo">If you dont vote you lose the right to complain</p>
 
     <div class="row">
         <div class="col mx-auto">
+
+            {% if loggedin is defined and loggedin == true %}
+            <a href="/dashboard" class="btn btn-1">Dashboard</a>
+            <a href="/cast" class="btn btn-2">Cast Vote</a>
+            {% else %}
             <a href="/register" class="btn btn-1">Register</a>
             <a href="/login" class="btn btn-2">Cast Vote</a>
+            {% endif %}
         </div>
     </div>
 
@@ -60,7 +66,7 @@
 <div class="container con-2">
 
     <div class="page-header text-center">
-        <h1 id="timeline">Just Do It</h1>
+        <h1 id="timeline">Follow This </h1>
     </div>
 
     <ul class="timeline">
@@ -177,4 +183,60 @@
     </ul>
 
 </div>
+
+<!--------------------------------Footer------------------------------------------------>
+
+  <!-- Site footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <h6>About</h6>
+          <p class="text-justify">A Website where you can vote no matter wherever you are.
+               Higly secured by blockchain. Live analysis of voting statistics is also available.
+               No alteration in votes making it more reliable system.</p>
+               
+        </div>
+
+        <div class="col-md-3"></div>
+
+        <div class="col-xs-6 col-md-3">
+          <h6>Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="/results">Live Result</a></li>
+            <li><a href="/vote_list">Voter List</a></li>
+            <li><a href="/candidate_list">Candidate List</a></li>
+            <li><a href="/cast">Cast Vote</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <p class="copyright-text">Copyright &copy; Designed and Developed by Anshit and Shwetal</p>
+        </div>
+        
+        <div class="col-6 col-md-3 text-center">
+            <span class="dev-name">Anshit</span>
+            <ul class="social-icons">
+                <li><a class="website" target="_blank" href="https://anshit01.github.io/"><i class="fa fa-globe fa-lg"></i></a></li>
+                <li><a class="linkedin" target="_blank" href="https://www.linkedin.com/in/anshit01"><i class="fa fa-linkedin fa-lg"></i></a></li>
+                <li><a class="linkedin" target="_blank" href="https://github.com/Anshit01"><i class="fa fa-github fa-lg"></i></a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md-3 text-center">
+            <span class="dev-name">Shwetal</span>
+            <ul class="social-icons">
+                <li><a class="website" target="_blank" href="https://shwetalsoni.github.io/"><i class="fa fa-globe fa-lg"></i></a></li>
+                <li><a class="linkedin" target="_blank" href="https://www.linkedin.com/in/shwetal-soni-329753199"><i class="fa fa-linkedin fa-lg"></i></a></li>
+                <li><a class="linkedin" target="_blank" href="https://github.com/shwetalsoni"><i class="fa fa-github fa-lg"></i></a></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+</footer>
+
 {% endblock %}

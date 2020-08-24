@@ -1,12 +1,15 @@
 import json
 import hashlib
 import random
+import requests
+import threading
 from flask import Flask, render_template, request, redirect, session
 import pymysql
 
 from app import config
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 #############WARNING: remove in production
 app.secret_key = config.appSecretKey
 
 blockchain_servers = [
@@ -26,6 +29,17 @@ def index():
 def newIndex():
     return render_template('index2.html')
 
+@app.route('/key_test')
+def key_test():
+    return render_template('key.html', voter_id = 100000000031, key = 'akjdshiuh874r78h23r82938h3rh')
+
+@app.route('/dashboard')
+def dashboard():
+    if isLoggedin():
+        return render_template("dashboard.html", loggedin = True, username = session['name'])
+    else:
+        return redirect("/")
+
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'GET':
@@ -38,11 +52,16 @@ def register():
         key = create_user(data)
         if key == '':
             return render_template('error.html', error='Unable to create Voter ID. Possibly a voter ID already exists with the same Aadhar ID.')
-        return render_template('key.html', key=key)
+        cursor.execute("select voter_id from voter_list where aadhar_id = %s", (aadhar_id))
+        voter_id = cursor.fetchone()[0]
+        return render_template('key.html', voter_id = voter_id, key=key)
 
 
 @app.route('/results')
-def results():
+def results():                  ##################TODO
+    candidateList2 = get_results()
+    for candidate in candidateList2:
+        print(candidate['votes'])
     candidateList = get_candidate_list()
     i = 100
     for candidate in candidateList:
@@ -84,7 +103,7 @@ def vote():
 def cast():
     if isLoggedin():
         candidateList = get_candidate_list()
-        return render_template('cast.html', candidateList=candidateList, loggedin = True)
+        return render_template('cast.html', candidateList=candidateList, loggedin = True, username = session['name'], voter_id = session['voter_id'], blockchain_servers = blockchain_servers)
     else:
         return redirect('/login')
 
@@ -188,7 +207,7 @@ def api_voter_check():
         verified = result[2]
         if result[0] == key_hash:
             if verified == 1:
-                if voted == 1:
+                if voted == 0:
                     return {"status": 1}
                 else:
                     error = "Already Voted."
@@ -257,6 +276,38 @@ def get_candidate_list():
         })
     return candidateList
 
+
+def get_results():
+    blockchainResponse = []
+    def makeReq(server):
+        blockchainResponse.append(requests.get(server + '/get_result').text)
+    reqs = []
+    for server in blockchain_servers:
+        reqs.append(threading.Thread(target=makeReq, args=[server]))
+        reqs[-1].start()
+    for req in reqs:
+        req.join()
+    similarResponse = {}
+    for res in blockchainResponse:
+        if res in similarResponse:
+            similarResponse[res] += 1
+        else:
+            similarResponse[res] = 1
+    resultStr = ''
+    maxCount = 0
+    for res in similarResponse:
+        if similarResponse[res] > maxCount:
+            maxCount = similarResponse[res]
+            resultStr = res
+    result = json.loads(resultStr)
+    
+    candidateList = get_candidate_list()
+    for candidate in candidateList:
+        if str(candidate['candidate_id']) in result:
+            candidate['votes'] = result[str(candidate['candidate_id'])]
+        else:
+            candidate['votes'] = 0
+    return candidateList
 
 def check_mysql_connection(cursor):
     try:

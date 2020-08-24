@@ -4,6 +4,7 @@
 
 h1 {
     text-align: center;
+    
 }
 
 
@@ -16,10 +17,15 @@ h1 {
 }
 
 .thread-dec {
-    background-color: #ffb647;
+    background-color: #57cc99;
 }
 
 .down-row {
-    background-color: #fff7eb;
+    background-color: #edfcf1;
 }
 
+.modal-img {
+    width: 200px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}

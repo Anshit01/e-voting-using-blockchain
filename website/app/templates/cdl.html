@@ -3,10 +3,10 @@
 
 {% block custom_css %}
    <link rel="stylesheet" href="static/css/cdl.css">
-
     <!---fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 
+    <script src="static/script/cdl.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -26,7 +26,7 @@
                                 <tr>
                                     <th scope="col">Sr.No.</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Political Party</th>
+                                    <th scope="col">Party</th>
                                 </tr>
 
                             </thead>
@@ -44,8 +44,8 @@
                                          
                                         
                                         <!-- Modal -->
-                                        <div class="modal fade" id="modal{{i}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                        <div class="modal fade" id="modal{{i}}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 
                                                 <div class="modal-body text-center">
@@ -53,7 +53,7 @@
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
-
+                                                    <img class="modal-img" src="static/images/party_logo/{{candidateList[i]['party']}}.png">
                                                    <p>{{candidateList[i]['name']}}</p>
                                                    <p>{{candidateList[i]['party']}}</p>
                                                    <p>Candidate ID: {{candidateList[i]['candidate_id']}}</p>

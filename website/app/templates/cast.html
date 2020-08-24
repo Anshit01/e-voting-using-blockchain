@@ -2,28 +2,122 @@
 {% block title %}Cast Vote{% endblock %}
 
 {% block custom_css %}
-  <link rel="stylesheet" href="static/css/cast.css">
+<link rel="stylesheet" href="static/css/cast.css">
+<script src="static/script/cast.js"></script>
+<!---fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 
-   <div class="container">
-     <div class="row">
+<div class="container">
+	<div class="row">
 
 
-      {% for i in range(candidateList|length) %}
-       <div class="col-sm-6 col-md-4 text-center">
-            <div class="candidate-div">
-                <img src="static/images/party_logo/independent.jpg" class="logo"></img>
-                <p class="name">{{candidateList[i]['name']}}</p>
-                <p class="party"><b>{{candidateList[i]['party']}}</b></p>
-                <a href="#" class="btn">Cast Vote</a>
-            </div>
-       </div>
-       {% endfor %}  
+		{% for i in range(candidateList|length) %}
+		<div class="col-sm-6 col-md-4 text-center">
+			<div class="candidate-div" id="candidate-div-{{i}}">
+				<img class="img" src="static/images/party_logo/{{candidateList[i]['party']}}.png" class="logo"></img>
+				<p class="name">{{candidateList[i]['name']}}</p>
+				<p class="party"><b>{{candidateList[i]['party']}}</b></p>
+				<p class="candidate-id hidden">{{candidateList[i]['candidate_id']}}</p>
+				<a href="javascript:showConfirmModal({{i}});" class="btn btn-cast">Cast Vote</a>
+			</div>
+		</div>
+		{% endfor %}
 
-       
-     </div>
-   </div>
+
+		<div class="modal fade" id="confirm-modal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<img class="confirm-img" src="static/images/party_logo/Independent.png">
+						<p id="confirm-name"></p>
+						<p id="confirm-party"></p>
+						<p>Candidate ID: <span id="confirm-candidate-id"></span></p>
+						<a href="javascript:showKeyModal();" class="btn btn-primary">Cast Vote</a>
+						<a href="javascript:cancelConfirmModal();" class="btn btn-outline-secondary btn-cancel">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="key-modal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<img class="key-img" src="static/images/party_logo/Independent.png">
+						<p id="key-name"></p>
+						<p id="key-party"></p>
+						<p>Candidate ID: <span id="key-candidate-id"></span></p>
+						<label for="key">Enter your private key to confirm your vote:</label>
+						<input type="text" id="key" placeholder="Enter your 32 character long private key">
+						<p>Forgot the key? <a href="/dashboard"><span>Generate new key here</span></a></p>
+						<br>
+						<a href="javascript:castVote();" class="btn btn-primary">Cast Vote</a>
+						<a href="javascript:cancelKeyModal();" class="btn btn-outline-secondary btn-cancel">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="vote-status-modal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<div class="spinner-border text-secondary modal-status"></div>
+						<p>Posting your vote...</p>
+						<p>Please have patience. This may take upto a minute to complete all security checks and cast your vote securely.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="success-modal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center additional">
+						<div class="back-body">
+                             <img class="tick" src="static/images/1x/Asset 1.png"></img>
+						</div>
+						<p class="successfully">Your vote was successfully posted!</p>
+						<a href="/cast" class="btn btn-1 ">DONE</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="failure-modal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center add-2">
+						<div class="front-body">
+							<img class="alert" src="static/images/1x/alert.png"></img>
+					    </div>
+						<p class="failed">Incorrect Key</p>
+						<p class="added-text">An error has occured while submitting the vote</p>
+                        <a href="/cast" class="btn btn-2 ">CANCEL</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="private-data" class="hidden">
+		<p id="username" class="hidden">{{username}}</p>
+		<p id="voter_id" class="hidden">{{voter_id}}</p>
+		<ul>
+			{% for server in blockchain_servers %}
+			<li class="server">{{server}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
 
 {% endblock %}

@@ -35,17 +35,14 @@ def cast_vote():
 
 @app.route('/get_result')
 def get_result():
-    chain = blockchain.chain[1:]
+    chain = json.loads(blockchain.get_blockchain())
+    chain = chain[1:]
     result = {}
     for block in chain:
-        candidate_id = block.candidate_id
+        candidate_id = block['candidate_id']
         if candidate_id in result:
             result[candidate_id] += 1
         else:
             result[candidate_id] = 1
     return result
         
-        
-
-if(__name__ == '__main__'):
-    app.run(debug=True)

@@ -6,10 +6,10 @@ body {
   .navbar {
     font-family: Montserrat, sans-serif;
     margin-bottom: 0;
-    background-color: #000000;
+    background-color: hsl(204 100% 5%);
     border: 0;
     font-size: 18px !important;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     opacity: 0.9;
   }
 
@@ -21,6 +21,31 @@ body {
       font-size: 25px;
   }
 
+  .navbar-toggler:focus, .navbar-toggler:active:focus, .navbar-toggler.active:focus{
+    outline:none;
+    box-shadow:none;
+}
+
   .navbar-nav li a:hover {
     color: #fff !important;
+  }
+
+  .navbar-nav > li {
+    white-space: nowrap;
+  }
+
+  .dash {
+    margin-left: 4px;
+  }
+
+  .navbar-toggler-icon:hover {
+
+     text-decoration: none;
+     outline: none;
+
+  }
+
+  .navbar-toggler {
+    outline: none;
+    text-decoration: none;
   }
