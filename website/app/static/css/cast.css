@@ -165,7 +165,7 @@ body {
     
 }
 
-input[type=text] {
+.search-bar input[type=text] {
     text-align: center;
     
 }
@@ -175,3 +175,40 @@ input[type=text] {
     font-size: 20px;
 }
 
+#confirm-name {
+    font-size: 30px;
+    margin-bottom: 0;
+}
+
+#confirm-party {
+    font-size: 25px;
+    margin-bottom: 40px;
+}
+
+#key-name {
+    font-size: 30px;
+    margin-bottom: 0;
+}
+
+#key-party {
+    font-size: 25px;
+    margin-bottom: 0;
+}
+
+.candidate-id-confirm{
+    margin-bottom: 40px;
+}
+
+.final {
+    background-color: #27ae60;
+    border-color:#27ae60;
+}
+
+.final:hover {
+    background-color: #27ae60;
+    border-color:#27ae60;
+}
+
+.final-modal ::placeholder {
+    font-size: 15px;
+}

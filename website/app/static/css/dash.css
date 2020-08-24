@@ -27,13 +27,13 @@ h1 {
 }
 
 .btn-primary {
-    background-color: #47c2c2;
-    border-color: #47c2c2;
+    background-color: #27ae60;
+    border-color: #27ae60;
 }
 
 .btn-primary:hover {
-    background-color: #47c2c2;
-    border-color: #47c2c2;
+    background-color: #27ae60;
+    border-color: #27ae60;
 }
 
 .shift {
@@ -41,9 +41,21 @@ h1 {
 }
 
 .fill-form {
-    background-color: #f0fafa;
+    background-color: hsl(204 100% 5%);
     margin-top: 3%;
     border-radius: 20px;
+}
+
+.fill-form h1 {
+    background: linear-gradient(
+        to right, 
+        hsl(98 100% 62%), 
+        hsl(204 100% 59%)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
 }
 
 .key {
@@ -70,4 +82,18 @@ h1 {
     background-color: transparent;
 }
 
+.col-form-label {
+    color: #fff;
+}
 
+.btn-danger{
+    background-color: #27ae60;
+    border-color: #27ae60;
+    color: #fff;
+}
+
+.btn-danger:hover{
+    background-color: #27ae60;
+    border-color: #27ae60;
+    color: #fff;
+}
