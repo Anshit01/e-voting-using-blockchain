@@ -30,8 +30,9 @@ class Blockchain:
         )
 
     def add_block(self, candidate_id):
-        proof = self.proof_of_work(self.lastBlock.proof)
         count = collection.count_documents({})
+        self.lastBlock = self.blockFromData(collection.find().skip(count - 1)[0])
+        proof = self.proof_of_work(self.lastBlock.proof)
         block = Block(count, candidate_id, self.get_timestamp(), proof, self.lastBlock.hash)
         collection.insert_one(block.toDict())
         self.lastBlock = block
@@ -61,7 +62,7 @@ class Blockchain:
             #### Increase the 0's in the following string to increase the difficulty of generating proof of work.
             #### Adding one 0 increases the time by about 10x.
             #### A string with 3 zeros ('000') takes about 0.5 seconds on a normal PC.
-            if hash_code[:3] == '00':
+            if hash_code[:2] == '00':
                 is_correct = True
             int_proof += 1
             new_proof = self.int_to_str(int_proof)
