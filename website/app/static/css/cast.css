@@ -17,6 +17,7 @@ body {
     transform: translate(-50%, 0);
 }
 
+
 .candidate-div {
     height: 330px;
     position: relative;
@@ -42,7 +43,8 @@ body {
 }
 
 .btn-cast:hover {
-    background-color: #57cc99;
+    background-color: #197278;
+    border-radius: 25px;
     color: #FFFFFF;
 }
 
