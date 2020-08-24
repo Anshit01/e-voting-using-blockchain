@@ -49,3 +49,7 @@ body {
     outline: none;
     text-decoration: none;
   }
+
+  .fav {
+    width: 20px;
+  }
