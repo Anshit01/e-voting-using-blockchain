@@ -26,7 +26,7 @@ function fetchResult(){
                 partyList.push(candidate['party'])
                 voteList.push(candidate['votes'])
             }
-            tableStr += " <tr> <td>" + i + "</td> <td>" + candidate['name'] + "</td> <td>" +
+            tableStr += " <tr> <td class='d-none d-sm-table-cell'>" + i + "</td> <td>" + candidate['name'] + "</td> <td>" +
             candidate['party'] + "</td> <td>" + candidate['votes'] + "</td> </tr>"
             i++
         }
