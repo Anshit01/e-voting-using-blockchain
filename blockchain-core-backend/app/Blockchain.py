@@ -1,25 +1,48 @@
 from app.Block import Block
+from app import config
+from pymongo import MongoClient
 import datetime
 import hashlib
 import json
 
+cluster = MongoClient(f"mongodb+srv://{(config.username)}:{(config.password)}@cluster0.j2n3h.mongodb.net/{(config.username)}?retryWrites=true&w=majority")
+collection = cluster[config.username].blockchain
+
+
 class Blockchain:
     def __init__(self):
-        self.chain = []
-        block = Block(0, '0', self.get_timestamp(), '0', '0')
-        self.chain.append(block)
+        blockCount = collection.count_documents({})
+        if blockCount == 0:
+            block = Block(0, '0', self.get_timestamp(), '0', '0')
+            collection.insert_one(block.toDict())
+        else:
+            blockData = collection.find().skip(collection.count_documents({}) - 1)[0]
+            block = self.blockFromData(blockData)
+        self.lastBlock = block
+
+    def blockFromData(self, data : dict) -> Block:
+        return Block(
+            data['index'],
+            data['candidate_id'],
+            data['timestamp'],
+            data['proof'],
+            data['previous_hash']
+        )
 
     def add_block(self, candidate_id):
-        proof = self.proof_of_work(self.chain[-1].proof)
-        block = Block(len(self.chain), candidate_id, self.get_timestamp(), proof, self.chain[-1].hash)
-        self.chain.append(block)
+        proof = self.proof_of_work(self.lastBlock.proof)
+        count = collection.count_documents({})
+        block = Block(count, candidate_id, self.get_timestamp(), proof, self.lastBlock.hash)
+        collection.insert_one(block.toDict())
+        self.lastBlock = block
 
     def get_blockchain(self):
-        lst = [self.parse_block_to_dict(block) for block in self.chain]
-        s = json.dumps(lst)
-        return s
+        data = list(collection.find({}))
+        for doc in data:
+            doc.pop('_id')
+        return json.dumps(data)
 
-    def parse_block_to_dict(self, block):
+    def parse_block_to_dict(self, block : Block):
         dictionary = {'index': block.index,
                       'candidate_id' : block.candidate_id,
                       'timestamp' : block.timestamp,
@@ -35,7 +58,10 @@ class Blockchain:
         is_correct = False
         while not is_correct:
             hash_code = hashlib.sha256((previous_proof*2 + new_proof*2).encode()).hexdigest()
-            if hash_code[:3] == '000':
+            #### Increase the 0's in the following string to increase the difficulty of generating proof of work.
+            #### Adding one 0 increases the time by about 10x.
+            #### A string with 3 zeros ('000') takes about 0.5 seconds on a normal PC.
+            if hash_code[:3] == '00':
                 is_correct = True
             int_proof += 1
             new_proof = self.int_to_str(int_proof)
