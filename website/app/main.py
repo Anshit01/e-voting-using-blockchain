@@ -129,6 +129,7 @@ def voter_list():
         })
     return render_template('admin.html', voterList=voterList, loggedin = isLoggedin())
 
+
 @app.route('/logout')
 def logout():
     session.pop('name', None)
@@ -170,6 +171,7 @@ def get_candidates():
 @app.route('/api/get_result')
 def get_result_api():
     return jsonify(get_results())
+
 
 
 ############################################*Blockchain server API routes*###############################################
@@ -250,7 +252,7 @@ def create_user(data : dict):
     return ''
 
 
-def get_candidate_list():
+def get_candidate_list() -> list:
     try:
         cursor.execute("select * from candidate_list;")
         rows = cursor.fetchall()
@@ -272,7 +274,7 @@ def get_candidate_list():
     return candidateList
 
 
-def get_results():
+def get_results() -> list:
     blockchainResponse = []
     def makeReq(server):
         blockchainResponse.append(requests.get(server + '/get_result').text)
@@ -304,6 +306,33 @@ def get_results():
             candidate['votes'] = 0
     return candidateList
 
+
+@app.route('/api/update_key', methods=['POST'])
+def update_key():
+    voter_id = request.form['voter_id']
+    password = request.form['password']
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+    check_mysql_connection(cursor)
+    query = "select name, aadhar_id, dob, contact_no, password_hash from voter_list where voter_id = %s;"
+    cursor.execute(query, (voter_id))
+    row = cursor.fetchone()
+    if row is None:
+        return ''
+    if password_hash == row[4]:
+        name = row[0]
+        aadhar_id = row[1]
+        dob = row[2]
+        contact_no = row[3]
+        lst = [name, aadhar_id, dob, contact_no, random.randrange(10**10)]
+        key = hashlib.md5(str(lst).encode()).hexdigest()
+        key_hash = hashlib.sha256(key.encode()).hexdigest()
+        cursor.execute("update voter_list set key_hash = %s where voter_id = %s;", (key_hash, voter_id))
+        connection.commit()
+        return key
+    return ''
+    
+
+
 def check_mysql_connection(cursor):
     try:
         cursor.execute("select * from sample_table where s_no=1;")
@@ -312,6 +341,7 @@ def check_mysql_connection(cursor):
         print(str(e1))
         try:
             connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
+            globals()['connection'] = connection
             cursor = connection.cursor()
         except Exception as e:
             print("Error: Unable to connect to mySQL server.")
