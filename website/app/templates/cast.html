@@ -11,6 +11,7 @@
 {% block content %}
 
 
+
 <div class="container text-center search-bar">
 	<form action="#" class="search">
 	  <input type="text" placeholder="Search" name="search" class="search-place">
@@ -46,7 +47,7 @@
 						<p id="confirm-name"></p>
 						<p id="confirm-party"></p>
 						<p>Candidate ID: <span id="confirm-candidate-id"></span></p>
-						<a href="javascript:showKeyModal();" class="btn btn-primary">Cast Vote</a>
+						<a href="javascript:showKeyModal();" class="btn btn-primary">Continue</a>
 						<a href="javascript:cancelConfirmModal();" class="btn btn-outline-secondary btn-cancel">Cancel</a>
 					</div>
 				</div>
@@ -56,19 +57,19 @@
 		<div class="modal fade" id="key-modal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
-					<div class="modal-body text-center">
+					<div class="modal-body text-center final-modal">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 						<img class="key-img" src="static/images/party_logo/Independent.png">
 						<p id="key-name"></p>
 						<p id="key-party"></p>
-						<p>Candidate ID: <span id="key-candidate-id"></span></p>
+						<p class="candidate-id-confirm">Candidate ID: <span id="key-candidate-id"></span></p>
 						<label for="key">Enter your private key to confirm your vote:</label>
 						<input type="text" id="key" placeholder="Enter your 32 character long private key">
 						<p>Forgot the key? <a href="/dashboard"><span>Generate new key here</span></a></p>
 						<br>
-						<a href="javascript:castVote();" class="btn btn-primary">Cast Vote</a>
+						<a href="javascript:castVote();" class="btn btn-primary final">Cast Vote</a>
 						<a href="javascript:cancelKeyModal();" class="btn btn-outline-secondary btn-cancel">Cancel</a>
 					</div>
 				</div>
