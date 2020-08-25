@@ -21,6 +21,7 @@ function fetchResult(){
         var voteList = []
         var tableStr = ""
         var i = 1
+        res.sort(function(a, b) {return b['votes'] - a['votes']})
         for(candidate of res){
             if(candidate['votes'] != 0){
                 partyList.push(candidate['party'])

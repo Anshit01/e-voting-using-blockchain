@@ -5,6 +5,8 @@
    <link rel="stylesheet" href="static/css/dash.css">
    <!---fonts-->
    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+   
+   <script src="/static/script/dashboard.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -15,65 +17,66 @@
                <h1 class="head"><b>Hello {{username}}</b></h1>
 
                <h2 class="para"> <b>Your security our priority</b></h2><br>
-               <button type="button" class="btn btn-danger btn-lg ">Generate Key</button>
+
+               <a href="javascript:showUpdateModal();" class="btn btn-update btn-lg ">Update Key</a>
                
 
                <img src="static/images/dash2.svg" class="dash-pic"></img>
 
-               <p>Why to put your password at risk .Keep updating your password and get a new key. Updating password
+               <p>Why to put your password at risk. Keep updating your password and get a new key. Updating password
                    adds an extra layer of security to an already highly secure e-voting system. </p>
 
            </div>
 
            <div class="col-md-7 offset-md-1 col-lg-6 offset-lg-2ś fill-form">
-               <h1><><b>Update Profile</b><></h1><br>
+                <h1>&lt;&gt;<b>Update Profile</b>&lt;&gt;</h1><br>
 
               
-                        <form role="form" class="shift">
+                <form role="form" class="shift">
 
-                            <div class="form-group ">
-                                <label class=" col-form-label form-control-label">Username</label>
-                                <div >
-                                    <input class="form-control" type="text" value="{{username}}" />
-                                </div>
-                            </div>
+                    <div class="form-group ">
+                        <label class=" col-form-label form-control-label">Username</label>
+                        <div >
+                            <input class="form-control" type="text" value="{{username}}" />
+                        </div>
+                    </div>
 
-                            <div class="form-group ">
-                                <label class=" col-form-label form-control-label">Contact Number</label>
-                                <div >
-                                    <input class="form-control" type="text" value="9318161322" />
-                                </div>
-                            </div>
-                           
-                            <div class="form-group ">
-                                <label class=" col-form-label form-control-label">Email</label>
-                                <div >
-                                    <input class="form-control" type="email" value="email@gmail.com" />
-                                </div>
-                            </div>
+                    <div class="form-group ">
+                        <label class=" col-form-label form-control-label">Contact Number</label>
+                        <div >
+                            <input class="form-control" type="text" value="9318161322" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group ">
+                        <label class=" col-form-label form-control-label">Email</label>
+                        <div >
+                            <input class="form-control" type="email" value="email@gmail.com" />
+                        </div>
+                    </div>
 
-                            <div class="form-group ">
-                                <label class=" col-form-label form-control-label">Password</label>
-                                <div>
-                                    <input class="form-control" type="password" value="11111122333" />
-                                </div>
-                            </div>
+                    <div class="form-group ">
+                        <label class=" col-form-label form-control-label">Password</label>
+                        <div>
+                            <input class="form-control" type="password" value="11111122333" />
+                        </div>
+                    </div>
 
-                            <div class="form-group ">
-                                <label class=" col-form-label form-control-label">Confirm password</label>
-                                <div >
-                                    <input class="form-control" type="password" value="11111122333" />
-                                </div>
-                            </div>
+                    <div class="form-group ">
+                        <label class=" col-form-label form-control-label">Confirm password</label>
+                        <div >
+                            <input class="form-control" type="password" value="11111122333" />
+                        </div>
+                    </div>
 
-                            <div class="form-group row ml-auto">
-                                <div >
-                                    <input type="reset" class="btn btn-outline-secondary" value="Cancel" />
-                                    <input type="button" class="btn btn-primary" value="Save Changes" />
-                                </div>
-                            </div>
+                    <div class="form-group row ml-auto">
+                        <div >
+                            <input type="reset" class="btn btn-outline-secondary" value="Cancel" />
+                            <input type="button" class="btn btn-primary" value="Save Changes" />
+                        </div>
+                    </div>
 
-                        </form>
+                </form>
 
                    
             </div>
@@ -82,5 +85,58 @@
 
        </div>
    </div>
+
+    <div class="modal fade" id="update-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center add-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p class="update-warning">Enter your password below to update your private key. 
+                        A new key will be generated and the old key will be made invalid.</p>
+                    <input type="password" id="password" placeholder="Password">
+                    <br>
+                    <a href="javascript:updateKey();" class="btn btn-update">UPDATE</a>
+                    <a href="javascript:hideUpdateModal();" class="btn btn-outline-secondary">CANCEL</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="status-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-secondary"></div>
+                    <p>Updating your private key...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="success-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center add-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p class="info-text">
+                        Key updated successfully! <br>
+                        Your new Private Key is:
+                    </p>
+                    <p class="key"></p>
+                    <p class="error"></p><br>
+                    <a href="javascript:hideSuccessModal();" class="btn btn-outline-secondary">CLOSE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <p id="voter-id" class="hidden">{{voter_id}}</p>
+
+</div>
 
 {% endblock %}

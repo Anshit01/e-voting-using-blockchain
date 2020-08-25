@@ -105,3 +105,11 @@ function voteCastFailure(error) {
     $('#failure-error').html(error)
     $('#failure-modal').modal()
 }
+
+function hideSuccessModal() {
+    $('#success-modal').modal('hide')
+}
+
+function hideFailureModal() {
+    $('#failure-modal').modal('hide')
+}
