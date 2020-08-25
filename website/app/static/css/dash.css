@@ -86,14 +86,41 @@ h1 {
     color: #fff;
 }
 
-.btn-danger{
+.btn-update{
     background-color: #27ae60;
     border-color: #27ae60;
     color: #fff;
 }
 
-.btn-danger:hover{
-    background-color: #27ae60;
+.btn-update:hover{
+    background-color: #27aea3;
     border-color: #27ae60;
     color: #fff;
+}
+
+.update-warning {
+    margin: 30px;
+}
+
+#password {
+    margin-bottom: 30px;
+}
+
+.spinner-border {
+    height: 100px;
+    width: 100px;
+    margin: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+.key {
+    font-size: 150%;
+
+}
+
+.error {
+    color: red;
 }

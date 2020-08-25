@@ -36,7 +36,7 @@ def key_test():
 @app.route('/dashboard')
 def dashboard():
     if isLoggedin():
-        return render_template("dashboard.html", loggedin = True, username = session['name'])
+        return render_template("dashboard.html", loggedin = True, username = session['name'], voter_id = session['voter_id'])
     else:
         return redirect("/")
 
@@ -218,11 +218,11 @@ def api_voter_check():
             print(str(e))
             return {
                 "status": 0,
-                "error": "Unable to connect to the database."
+                "error": "Unable to connect to the database"
             }
 
     if result is None:
-        error = "Invalid Voter ID."
+        error = "Invalid Voter ID"
     else:
         voted = result[1]
         verified = result[2]
@@ -231,11 +231,11 @@ def api_voter_check():
                 if voted == 0:
                     return {"status": 1}
                 else:
-                    error = "Already Voted."
+                    error = "Already Voted"
             else:
-                error = "Voter ID not verified."
+                error = "Voter ID not verified"
         else:
-            error = "Incorrect Key."
+            error = "Incorrect Key"
 
     return {
         "status": 0,
