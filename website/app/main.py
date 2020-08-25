@@ -173,6 +173,30 @@ def get_result_api():
     return jsonify(get_results())
 
 
+@app.route('/api/update_key', methods=['POST'])
+def update_key():
+    voter_id = request.form['voter_id']
+    password = request.form['password']
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+    check_mysql_connection(cursor)
+    query = "select name, aadhar_id, dob, contact_no, password_hash from voter_list where voter_id = %s;"
+    cursor.execute(query, (voter_id))
+    row = cursor.fetchone()
+    if row is None:
+        return ''
+    if password_hash == row[4]:
+        name = row[0]
+        aadhar_id = row[1]
+        dob = row[2]
+        contact_no = row[3]
+        lst = [name, aadhar_id, dob, contact_no, random.randrange(10**10)]
+        key = hashlib.md5(str(lst).encode()).hexdigest()
+        key_hash = hashlib.sha256(key.encode()).hexdigest()
+        cursor.execute("update voter_list set key_hash = %s where voter_id = %s;", (key_hash, voter_id))
+        connection.commit()
+        return key
+    return ''
+
 
 ############################################*Blockchain server API routes*###############################################
 
@@ -306,30 +330,6 @@ def get_results() -> list:
             candidate['votes'] = 0
     return candidateList
 
-
-@app.route('/api/update_key', methods=['POST'])
-def update_key():
-    voter_id = request.form['voter_id']
-    password = request.form['password']
-    password_hash = hashlib.sha256(password.encode()).hexdigest()
-    check_mysql_connection(cursor)
-    query = "select name, aadhar_id, dob, contact_no, password_hash from voter_list where voter_id = %s;"
-    cursor.execute(query, (voter_id))
-    row = cursor.fetchone()
-    if row is None:
-        return ''
-    if password_hash == row[4]:
-        name = row[0]
-        aadhar_id = row[1]
-        dob = row[2]
-        contact_no = row[3]
-        lst = [name, aadhar_id, dob, contact_no, random.randrange(10**10)]
-        key = hashlib.md5(str(lst).encode()).hexdigest()
-        key_hash = hashlib.sha256(key.encode()).hexdigest()
-        cursor.execute("update voter_list set key_hash = %s where voter_id = %s;", (key_hash, voter_id))
-        connection.commit()
-        return key
-    return ''
     
 
 
