@@ -7,7 +7,8 @@ h1{
 }
 
 .tab {
-    margin-top: 5%;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .thread-dec {
@@ -18,7 +19,4 @@ h1{
     background-color: #effbfb;
 }
 
-h1 {
-    font-size: 45px;
-    
-}
+

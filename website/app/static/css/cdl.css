@@ -9,11 +9,8 @@ h1 {
 
 
 .tab {
-    padding-right: 0;
-    padding-left: 0;
-    margin-right: 0%;
-    margin-left: 0;
-    margin-top: 7%;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .thread-dec {
