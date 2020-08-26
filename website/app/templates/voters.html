@@ -2,7 +2,7 @@
 {% block title %}Voter's List{% endblock %}
 
 {% block custom_css %}
-<link rel="stylesheet" href="static/css/admin.css">
+<link rel="stylesheet" href="static/css/voters.css">
 
 <!---fonts-->
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
@@ -41,9 +41,13 @@
 
                         <td>{{ voterList[i]['voter_id'] }}</td>
                         <td>{{ voterList[i]['name'] }}</td>
-                        <td>{{ voterList[i]['voted'] }}</td>
-
-
+                        <td>
+                        {% if voterList[i]['voted'] == 0 %}
+                            <span class="fa fa-times fa-lg"></span>
+                        {% else %}
+                            <span class="fa fa-check fa-lg"></span>
+                        {% endif %}
+                        </td>
                     </tr>
 
                     {% endfor %}

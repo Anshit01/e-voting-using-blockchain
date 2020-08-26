@@ -19,19 +19,14 @@ blockchain_servers = [
 ]
 
 connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
+connection.autocommit(True)
 cursor = connection.cursor()
+
 
 @app.route('/')
 def index():
     return render_template('index.html', loggedin = isLoggedin())
 
-@app.route('/2')
-def newIndex():
-    return render_template('index2.html')
-
-@app.route('/key_test')
-def key_test():
-    return render_template('key.html', voter_id = 100000000031, key = 'akjdshiuh874r78h23r82938h3rh')
 
 @app.route('/dashboard')
 def dashboard():
@@ -39,6 +34,7 @@ def dashboard():
         return render_template("dashboard.html", loggedin = True, username = session['name'], voter_id = session['voter_id'])
     else:
         return redirect("/")
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -91,6 +87,7 @@ def vote():
             return redirect('/')
         return render_template('login.html', loggedin = False)
 
+
 @app.route('/cast', methods=['GET', 'POST'])
 def cast():
     if isLoggedin():
@@ -103,7 +100,7 @@ def cast():
 @app.route('/candidate_list')
 def candidate_list():
     candidateList = get_candidate_list()
-    return render_template('cdl.html', candidateList = candidateList, loggedin = isLoggedin())
+    return render_template('candidates.html', candidateList = candidateList, loggedin = isLoggedin())
 
 
 @app.route('/voter_list')
@@ -127,7 +124,7 @@ def voter_list():
             'name': row[1],
             'voted': row[2]
         })
-    return render_template('admin.html', voterList=voterList, loggedin = isLoggedin())
+    return render_template('voters.html', voterList=voterList, loggedin = isLoggedin())
 
 
 @app.route('/logout')
@@ -154,7 +151,6 @@ def create_user_route():
         print(voter_id)
         query = f'''insert into voter_list values({voter_id}, '{name}', '{password_hash}', {aadhar_id}, "{dob}", {contact_no}, "{key}", 0, 0);'''
         cursor.execute(query)
-        connection.commit()
         return key
     except Exception as e:
         connection.rollback()
@@ -193,7 +189,6 @@ def update_key():
         key = hashlib.md5(str(lst).encode()).hexdigest()
         key_hash = hashlib.sha256(key.encode()).hexdigest()
         cursor.execute("update voter_list set key_hash = %s where voter_id = %s;", (key_hash, voter_id))
-        connection.commit()
         return key
     return ''
 
@@ -228,7 +223,8 @@ def api_voter_check():
         verified = result[2]
         if result[0] == key_hash:
             if verified == 1:
-                if voted == 0:
+                if voted < len(blockchain_servers):
+                    # cursor.execute("update voter_list set voted = voted + 1 where voter_id = %s", (voter_id))
                     return {"status": 1}
                 else:
                     error = "Already Voted"
@@ -268,7 +264,6 @@ def create_user(data : dict):
                 key_hash,
                 verified
         ))
-        connection.commit()
         return key
     except Exception as e:
         connection.rollback()
@@ -332,7 +327,6 @@ def get_results() -> list:
 
     
 
-
 def check_mysql_connection(cursor):
     try:
         cursor.execute("select * from sample_table where s_no=1;")
@@ -341,6 +335,7 @@ def check_mysql_connection(cursor):
         print(str(e1))
         try:
             connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
+            connection.autocommit(True)
             globals()['connection'] = connection
             cursor = connection.cursor()
         except Exception as e:
