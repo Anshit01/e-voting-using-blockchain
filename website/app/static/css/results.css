@@ -26,11 +26,11 @@ h1 {
 }
 
 /* Load Screen styles */
-body {
+/* body {
     margin: 0px !important;
     padding: 0px !important;
     position: static;
-}
+} */
 
 .loading-caption {
     position: absolute;
@@ -44,18 +44,21 @@ body {
 
 .load-screen {
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     background: hsl(204 100% 5%);
     text-align: center;
-  }
-  .dots-container{
+    position: fixed;
+}
+
+.dots-container{
     padding: 0;
     position: absolute;
     text-align: center;
     top: 50%;
     width: 100%;
-  }
-  .dots{
+}
+
+.dots{
     animation: bounce 1.5s infinite linear;
     background: hsl(204 100% 59%);
     border-radius: 50%;
@@ -63,32 +66,31 @@ body {
     height: 20px;
     text-align: center;
     width: 20px;
-  }
+}
   
-  .dots:nth-child(1){
+.dots:nth-child(1){
     animation-delay: .2s;
-  }
-  .dots:nth-child(2){
+}
+.dots:nth-child(2){
     animation-delay: .4s;
-  }
-  .dots:nth-child(3){
+}
+.dots:nth-child(3){
     animation-delay: .6s;
-  }
-  .dots:nth-child(4){
-    animation-delay: .8s;
-  }
-  .dots:nth-child(5){
+}
+.dots:nth-child(4){
+  animation-delay: .8s;
+}
+.dots:nth-child(5){
     animation-delay: 1s;
-  }
-  @keyframes bounce {
-      0% {
-              transform: translateY(0);
-      }
-        15% {
-          transform: translateY(-15px);
-      }
-      30% {
-          transform: translateY(0);
-      }
-  }
-  
+}
+@keyframes bounce {
+    0% {
+            transform: translateY(0);
+    }
+    15% {
+        transform: translateY(-15px);
+    }
+    30% {
+        transform: translateY(0);
+    }
+}
