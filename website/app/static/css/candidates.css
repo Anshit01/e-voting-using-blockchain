@@ -26,3 +26,11 @@ h1 {
     margin-top: 50px;
     margin-bottom: 20px;
 }
+
+.name {
+    font-size: 30px;
+}
+
+.party{
+    font-size: 25px;
+}
