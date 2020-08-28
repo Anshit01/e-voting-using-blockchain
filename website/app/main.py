@@ -1,10 +1,11 @@
+import os
 import json
 import hashlib
 import random
 import requests
 import threading
 from flask import Flask, render_template, request, redirect, session, jsonify
-import pymysql
+import psycopg2
 
 from app import config
 
@@ -12,25 +13,30 @@ app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 #############WARNING: remove in production
 app.secret_key = config.appSecretKey
 
-blockchain_servers = [
+BLOCKCHAIN_SERVERS = [
     'https://e-voting-blockchain-core-1.herokuapp.com',
     'https://e-voting-blockchain-core-2.herokuapp.com',
     'https://e-voting-blockchain-core-3.herokuapp.com'
 ]
 
-connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
-connection.autocommit(True)
-cursor = connection.cursor()
+DATABASE_URL = ''
+if 'DATABASE_URL' in dir(config):
+    DATABASE_URL = config.DATABASE_URL
+else:
+    DATABASE_URL = os.environ['DATABASE_URL']
 
+connection = psycopg2.connect(DATABASE_URL, sslmode = 'require')
+connection.autocommit = True
+cursor = connection.cursor()
 
 @app.route('/')
 def index():
-    return render_template('index.html', loggedin = isLoggedin())
+    return render_template('index.html', loggedin = is_loggedin())
 
 
 @app.route('/dashboard')
 def dashboard():
-    if isLoggedin():
+    if is_loggedin():
         return render_template("dashboard.html", loggedin = True, username = session['name'], voter_id = session['voter_id'])
     else:
         return redirect("/")
@@ -39,7 +45,7 @@ def dashboard():
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'GET':
-        if isLoggedin():
+        if is_loggedin():
             return redirect('/')
         return render_template('register.html', loggedin = False)
     else:
@@ -48,14 +54,14 @@ def register():
         key = create_user(data)
         if key == '':
             return render_template('error.html', error='Unable to create Voter ID. Possibly a voter ID already exists with the same Aadhar ID.')
-        cursor.execute("select voter_id from voter_list where aadhar_id = %s", (aadhar_id))
+        cursor.execute("select voter_id from voter_list where aadhar_id = %s", (aadhar_id, ))
         voter_id = cursor.fetchone()[0]
         return render_template('key.html', voter_id = voter_id, key=key)
 
 
 @app.route('/results')
 def results():
-    return render_template('results.html', loggedin = isLoggedin())
+    return render_template('results.html', loggedin = is_loggedin())
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -67,7 +73,7 @@ def vote():
             voter_id = request.form['voter_id']
             password = request.form['password']
             password_hash = hashlib.sha256(password.encode()).hexdigest()
-            cursor.execute("select name, password_hash from voter_list where voter_id = %s;", (voter_id))
+            cursor.execute("select name, password_hash from voter_list where voter_id = %s;", (voter_id, ))
             result = cursor.fetchone()
             if result is not None:
                 if name == result[0] and password_hash == result[1]:
@@ -83,16 +89,16 @@ def vote():
             print(str(e))
             return render_template('error.html', error="Unable to connect to the database. Please try again later.")
     else:
-        if isLoggedin():
+        if is_loggedin():
             return redirect('/')
         return render_template('login.html', loggedin = False)
 
 
 @app.route('/cast', methods=['GET', 'POST'])
 def cast():
-    if isLoggedin():
+    if is_loggedin():
         candidateList = get_candidate_list()
-        return render_template('cast.html', candidateList=candidateList, loggedin = True, username = session['name'], voter_id = session['voter_id'], blockchain_servers = blockchain_servers)
+        return render_template('cast.html', candidateList=candidateList, loggedin = True, username = session['name'], voter_id = session['voter_id'], blockchain_servers = BLOCKCHAIN_SERVERS)
     else:
         return redirect('/login')
 
@@ -100,7 +106,7 @@ def cast():
 @app.route('/candidate_list')
 def candidate_list():
     candidateList = get_candidate_list()
-    return render_template('candidates.html', candidateList = candidateList, loggedin = isLoggedin())
+    return render_template('candidates.html', candidateList = candidateList, loggedin = is_loggedin())
 
 
 @app.route('/voter_list')
@@ -124,7 +130,7 @@ def voter_list():
             'name': row[1],
             'voted': row[2]
         })
-    return render_template('voters.html', voterList=voterList, loggedin = isLoggedin())
+    return render_template('voters.html', voterList=voterList, loggedin = is_loggedin())
 
 
 @app.route('/logout')
@@ -176,7 +182,7 @@ def update_key():
     password_hash = hashlib.sha256(password.encode()).hexdigest()
     check_mysql_connection(cursor)
     query = "select name, aadhar_id, dob, contact_no, password_hash from voter_list where voter_id = %s;"
-    cursor.execute(query, (voter_id))
+    cursor.execute(query, (voter_id, ))
     row = cursor.fetchone()
     if row is None:
         return ''
@@ -202,12 +208,12 @@ def api_voter_check():
     error = ""
     query = "select key_hash, voted, verified from voter_list where voter_id = %s;"
     try:
-        cursor.execute(query, (voter_id))
+        cursor.execute(query, (voter_id, ))
         result = cursor.fetchone()
     except:
         check_mysql_connection(cursor)
         try:
-            cursor.execute(query, (voter_id))
+            cursor.execute(query, (voter_id, ))
             result = cursor.fetchone()
         except Exception as e:
             print(str(e))
@@ -223,8 +229,8 @@ def api_voter_check():
         verified = result[2]
         if result[0] == key_hash:
             if verified == 1:
-                if voted < len(blockchain_servers):
-                    # cursor.execute("update voter_list set voted = voted + 1 where voter_id = %s", (voter_id))
+                if voted < len(BLOCKCHAIN_SERVERS):
+                    # cursor.execute("update voter_list set voted = voted + 1 where voter_id = %s", (voter_id, ))
                     return {"status": 1}
                 else:
                     error = "Already Voted"
@@ -298,7 +304,7 @@ def get_results() -> list:
     def makeReq(server):
         blockchainResponse.append(requests.get(server + '/get_result').text)
     reqs = []
-    for server in blockchain_servers:
+    for server in BLOCKCHAIN_SERVERS:
         reqs.append(threading.Thread(target=makeReq, args=[server]))
         reqs[-1].start()
     for req in reqs:
@@ -329,21 +335,21 @@ def get_results() -> list:
 
 def check_mysql_connection(cursor):
     try:
-        cursor.execute("select * from sample_table where s_no=1;")
+        cursor.execute("select * from candidate_list where candidate_id=100001;")
     except Exception as e1:
         print("Reconnecting to database server...")
         print(str(e1))
         try:
-            connection = pymysql.connect(config.mysqlServer, config.mysqlUsername, config.mysqlPassword, config.mysqlDatabase)
-            connection.autocommit(True)
+            connection = psycopg2.connect(DATABASE_URL, sslmode='require')
+            connection.autocommit = True
             globals()['connection'] = connection
             cursor = connection.cursor()
         except Exception as e:
-            print("Error: Unable to connect to mySQL server.")
+            print("Error: Unable to connect to database.")
             print("Error: " + str(e))
     globals()['cursor'] = cursor
 
-def isLoggedin() -> bool:
+def is_loggedin() -> bool:
     if 'name' in session and 'voter_id' in session:
         return True
     return False
