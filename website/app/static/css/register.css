@@ -66,3 +66,9 @@ h2{
 .extra:hover {
     text-decoration: none;
 }
+
+#warning {
+    text-align: center;
+    color: red;
+    transition: text-shadow 0.5s;
+}
