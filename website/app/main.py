@@ -256,11 +256,11 @@ def create_user(data : dict):
         dob = data['dob']
         contact_no = data['contact_no']
         email = data['email']
-        verified = 1               #verification automated
+        verified = True               #verification automated
         lst = [name, aadhar_id, dob, contact_no, random.randrange(10**10)]
         key = hashlib.md5(str(lst).encode()).hexdigest()
         key_hash = hashlib.sha256(key.encode()).hexdigest()
-        cursor.execute("insert into voter_list (name, password_hash, aadhar_id, dob, email, contact_no, key_hash, voted, verified) values (%s, %s, %s, %s, %s, %s, %s, false, %s);", (
+        cursor.execute("insert into voter_list (name, password_hash, aadhar_id, dob, email, contact_no, key_hash, voted, verified) values (%s, %s, %s, %s, %s, %s, %s, 0, %s);", (
                 name,
                 password_hash,
                 aadhar_id,

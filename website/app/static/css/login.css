@@ -66,6 +66,3 @@ h1 {
     color: red;
     transition: text-shadow 0.5s;
 }
-#warning:hover {
-    text-shadow: 0 0 50px red, 0 0 20px red, 0 0 10px red;
-}

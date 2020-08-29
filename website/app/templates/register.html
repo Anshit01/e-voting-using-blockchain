@@ -4,6 +4,7 @@
 {% block custom_css %}
   <link rel="stylesheet" href="static/css/register.css">
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+  <script src="/static/script/register.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +13,7 @@
             <div class="row">
                 <div class="col-10 mx-auto col-sm-9 col-md-7 col-lg-5 div-form">
                         <h2>Create Account</h2><br>
-                        <form method="POST" action="#">
+                        <form method="POST" onsubmit="return validate()">
 
                             <div class="form-group">
                                 <label for="name">Full Name</label>
@@ -21,21 +22,21 @@
 
                             <div class="form-group">
                                 <label for="dob">Date of Birth</label>
-                                <input type="date" class="form-control" name="dob" id="dob" placeholder="">
+                                <input type="date" class="form-control" name="dob" id="dob" min="1900-01-01" max="2003-01-01">
                             </div>
 
                             <div class="form-group">
-                                <label for="aadhar-id">Aadhar Card Number</label>
+                                <label for="aadhar-id">Aadhar Card Number (12 digits)</label>
                                 <input type="number" class="form-control" name="aadhar_id" id="aadhar-id" placeholder="0000111122223333">
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="asdf@mail.com">
+                                <label for="email">Email address</label>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="asdf@mail.com">
                             </div>
 
                             <div class="form-group">
-                                <label for="contact-no">Contact Number</label>
+                                <label for="contact-no">Contact Number (10 digits)</label>
                                 <input type="number" class="form-control" name="contact_no" id="contact-no" placeholder="">
                             </div>
 
@@ -48,11 +49,18 @@
                                 <label for="password-confirm">Confirm Password</label>
                                 <input type="password" class="form-control" id="password-confirm" placeholder="Pass@123">
                             </div>
-                            <br>
-
+                            
+                            <p id="warning">
+                                {% if error is defined %}
+                                {{error}}
+                                {% endif %}
+                            </p>
+                            
                             <button type="submit" class="btn  btn-primary">Sign Up</button>
 
                         </form><br>
+
+                        
                         <p id="cast-vote-link">
                             <span >Already have an account? </span>
                             <a href="/login" class="extra"><b>Login</b></a>
