@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import hashlib
 import random
@@ -51,12 +52,16 @@ def register():
     else:
         aadhar_id = request.form['aadhar_id']
         data = dict(request.form)
-        key = create_user(data)
-        if key == '':
-            return render_template('error.html', error='Unable to create Voter ID. Possibly a voter ID already exists with the same Aadhar ID.')
-        cursor.execute("select voter_id from voter_list where aadhar_id = %s", (aadhar_id, ))
-        voter_id = cursor.fetchone()[0]
-        return render_template('key.html', voter_id = voter_id, key=key)
+        response = create_user(data)
+        if 'error' in response:
+            return render_template('register.html', error=response['error'], loggedin = False)
+        key = response['key']
+        cursor.execute("select voter_id, name from voter_list where aadhar_id = %s", (aadhar_id, ))
+        res = cursor.fetchone()
+        voter_id = res[0]
+        name = res[1]
+        login(name, voter_id)
+        return render_template('key.html', voter_id = voter_id, key=key, loggedin = is_loggedin())
 
 
 @app.route('/results')
@@ -65,7 +70,7 @@ def results():
 
 
 @app.route('/login', methods=['POST', 'GET'])
-def vote():
+def login_route():
     if request.method == 'POST':
         check_mysql_connection(cursor)
         try:
@@ -77,9 +82,7 @@ def vote():
             result = cursor.fetchone()
             if result is not None:
                 if name == result[0] and password_hash == result[1]:
-                    session.permanent = False
-                    session['name'] = name
-                    session['voter_id'] = voter_id
+                    login(name, voter_id)
                     return redirect('/cast')
                 else:
                     return render_template('login.html', warning="User name or password does not match. Try again.")
@@ -248,8 +251,10 @@ def api_voter_check():
 
 def create_user(data : dict):
     check_mysql_connection(cursor)
+    error_msg = ''
     try:
         name = data['name']
+        name = ' '.join(name.split())
         password = data['password']
         password_hash = hashlib.sha256(password.encode()).hexdigest()
         aadhar_id = data['aadhar_id']
@@ -257,24 +262,40 @@ def create_user(data : dict):
         contact_no = data['contact_no']
         email = data['email']
         verified = True               #verification automated
-        lst = [name, aadhar_id, dob, contact_no, random.randrange(10**10)]
-        key = hashlib.md5(str(lst).encode()).hexdigest()
-        key_hash = hashlib.sha256(key.encode()).hexdigest()
-        cursor.execute("insert into voter_list (name, password_hash, aadhar_id, dob, email, contact_no, key_hash, voted, verified) values (%s, %s, %s, %s, %s, %s, %s, 0, %s);", (
-                name,
-                password_hash,
-                aadhar_id,
-                dob,
-                email,
-                contact_no,
-                key_hash,
-                verified
-        ))
-        return key
+
+        if re.search('[a-zA-Z]', name) is None:
+            error_msg = 'Invalid name'
+        elif dob == '':
+            error_msg = 'Invalid Date of Birth'
+        elif re.search('^[1-9]{1}[0-9]{11}$', aadhar_id) is None:
+            error_msg = 'Invalid Aadhar ID'
+        elif re.search('^[1-9]{1}[0-9]{9}$', contact_no) is None:
+            error_msg = 'Invalid Contact Number'
+        elif re.search("[^@]+@[^@]+\\.[^@]+", email) is None:
+            error_msg = 'Invalid Email ID'
+        else:
+            lst = [name, aadhar_id, dob, contact_no, random.randrange(10**10)]
+            key = hashlib.md5(str(lst).encode()).hexdigest()
+            key_hash = hashlib.sha256(key.encode()).hexdigest()
+            cursor.execute("select voter_id from voter_list where aadhar_id = %s", (aadhar_id, ))
+            if cursor.fetchone() is None:
+                cursor.execute("insert into voter_list (name, password_hash, aadhar_id, dob, email, contact_no, key_hash, voted, verified) values (%s, %s, %s, %s, %s, %s, %s, 0, %s);", (
+                        name,
+                        password_hash,
+                        aadhar_id,
+                        dob,
+                        email,
+                        contact_no,
+                        key_hash,
+                        verified
+                ))
+                return {'key': key}
+            else:
+                error_msg = 'This Aadhar ID is already registered.'
     except Exception as e:
-        connection.rollback()
         print('Error: ', e)
-    return ''
+        error_msg = 'Interval server error in creating Voter ID'
+    return {'error': error_msg}
 
 
 def get_candidate_list() -> list:
@@ -348,6 +369,11 @@ def check_mysql_connection(cursor):
             print("Error: Unable to connect to database.")
             print("Error: " + str(e))
     globals()['cursor'] = cursor
+
+def login(name, voter_id):
+    session.permanent = False
+    session['name'] = name
+    session['voter_id'] = voter_id
 
 def is_loggedin() -> bool:
     if 'name' in session and 'voter_id' in session:
