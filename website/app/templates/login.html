@@ -4,6 +4,7 @@
 {% block custom_css %}
 <link rel="stylesheet" href="static/css/login.css">
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+<script src="static/script/login.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -16,7 +17,7 @@
                         
                          <h1>Login</h1><br>
 
-                        <form action="#" method="post">
+                        <form method="POST" id="login-form" onsubmit="return validate()">
 
                             <div class="form-group">
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Name">
@@ -35,9 +36,11 @@
 
                         </form><br>
                         
+                        <p id="warning">
                         {% if warning is defined %}
-                            <p id="warning">{{warning}}</p>
+                            {{warning}}
                         {% endif %}
+                        </p>
                         
                         <span>Doesn't have an account? </span>
                         <a href="/register" class="extra"><b>Register Here!</b></a>
