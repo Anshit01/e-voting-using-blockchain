@@ -42,9 +42,9 @@ h1 {
 
 .profile {
     background-color: hsl(204 100% 5%);
-    margin-top: 3%;
-    border-radius: 20px;
+    margin-top: 40px;
     margin-bottom: 50px;
+    border-radius: 20px;
 }
 
 .profile h1 {
@@ -127,19 +127,24 @@ h1 {
 }
 
 #profile-data {
-    color: #fff;
     margin: 30px 30px 50px 30px;
 }
 
 .field {
     font-size: 130%;
+    color: #ddd;
 }
 
 .value {
     float: right;
     font-size: 150%;
+    color: #aaa;
+}
+
+.field-parent {
+    overflow: hidden;
 }
 
 hr {
-    background-color: #aaa;
+    background-color: #777;
 }

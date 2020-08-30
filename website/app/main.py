@@ -105,7 +105,7 @@ def login_route():
             if result is not None:
                 if name == result[0] and password_hash == result[1]:
                     login(name, voter_id)
-                    return redirect('/cast')
+                    return redirect('/')
                 else:
                     return render_template('login.html', warning="User name or password does not match. Try again.")
             else:
@@ -255,7 +255,7 @@ def api_voter_check():
         if result[0] == key_hash:
             if verified == 1:
                 if voted < len(BLOCKCHAIN_SERVERS):
-                    # cursor.execute("update voter_list set voted = voted + 1 where voter_id = %s", (voter_id, ))
+                    cursor.execute("update voter_list set voted = voted + 1 where voter_id = %s", (voter_id, ))
                     return {"status": 1}
                 else:
                     error = "Already Voted"
@@ -393,7 +393,7 @@ def check_mysql_connection(cursor):
     globals()['cursor'] = cursor
 
 def login(name, voter_id):
-    session.permanent = False
+    session.permanent = True
     session['name'] = name
     session['voter_id'] = voter_id
 
