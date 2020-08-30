@@ -40,13 +40,14 @@ h1 {
     margin-left: 10px;
 }
 
-.fill-form {
+.profile {
     background-color: hsl(204 100% 5%);
     margin-top: 3%;
     border-radius: 20px;
+    margin-bottom: 50px;
 }
 
-.fill-form h1 {
+.profile h1 {
     background: linear-gradient(
         to right, 
         hsl(98 100% 62%), 
@@ -123,4 +124,22 @@ h1 {
 
 .error {
     color: red;
+}
+
+#profile-data {
+    color: #fff;
+    margin: 30px 30px 50px 30px;
+}
+
+.field {
+    font-size: 130%;
+}
+
+.value {
+    float: right;
+    font-size: 150%;
+}
+
+hr {
+    background-color: #aaa;
 }
