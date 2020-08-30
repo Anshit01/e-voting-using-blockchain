@@ -62,7 +62,8 @@
 }
 
 #key {
-    width: 300px;
+    max-width: 300px;
+    width: 80%;
     margin: 10px;
 }
 
