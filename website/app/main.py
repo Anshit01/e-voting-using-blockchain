@@ -40,13 +40,14 @@ def dashboard():
     if is_loggedin():
         voter_id = session['voter_id']
         try:
-            query = "select aadhar_id, dob, contact_no, email from voter_list where voter_id = %s"
+            query = "select aadhar_id, dob, contact_no, email, voted from voter_list where voter_id = %s"
             cursor.execute(query, (voter_id, ))
             res = cursor.fetchone()
             aadhar_id = res[0]
             dob = res[1]
             contact_no = res[2]
             email = res[3]
+            voted = False if res[4] == 0 else True
             return render_template(
                 "dashboard.html",
                 loggedin = True,
@@ -55,7 +56,8 @@ def dashboard():
                 aadhar_id = aadhar_id,
                 dob = dob,
                 contact_no = contact_no,
-                email = email
+                email = email,
+                voted = voted
             )
         except Exception as e:
             print(str(e))
@@ -97,6 +99,7 @@ def login_route():
         check_mysql_connection(cursor)
         try:
             name = request.form['name']
+            name = ' '.join([word.capitalize() for word in name.split()])
             voter_id = request.form['voter_id']
             password = request.form['password']
             password_hash = hashlib.sha256(password.encode()).hexdigest()
@@ -136,7 +139,7 @@ def candidate_list():
 
 @app.route('/voter_list')
 def voter_list():
-    query = "select voter_id, name, voted from voter_list;"
+    query = "select voter_id, name, voted from voter_list order by voter_id;"
     try:
         cursor.execute(query)
         rows = cursor.fetchall()
