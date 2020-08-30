@@ -38,7 +38,29 @@ def index():
 @app.route('/dashboard')
 def dashboard():
     if is_loggedin():
-        return render_template("dashboard.html", loggedin = True, username = session['name'], voter_id = session['voter_id'])
+        voter_id = session['voter_id']
+        try:
+            query = "select aadhar_id, dob, contact_no, email from voter_list where voter_id = %s"
+            cursor.execute(query, (voter_id, ))
+            res = cursor.fetchone()
+            aadhar_id = res[0]
+            dob = res[1]
+            contact_no = res[2]
+            email = res[3]
+            return render_template(
+                "dashboard.html",
+                loggedin = True,
+                username = session['name'],
+                voter_id = voter_id,
+                aadhar_id = aadhar_id,
+                dob = dob,
+                contact_no = contact_no,
+                email = email
+            )
+        except Exception as e:
+            print(str(e))
+            return logout()
+
     else:
         return redirect("/")
 
