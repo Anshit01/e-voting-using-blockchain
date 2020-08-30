@@ -15,60 +15,60 @@
 
             <div class="row">
 
-                 <div class="col-10 mx-auto col-sm-10  tab">
+                 <div class="col-11 mx-auto col-sm-10  tab">
 
                     <h1>Candidate List</h1><br>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
 
-                    <table class="table table-hover">
+                                <thead class="thread-dec">
 
-                            <thead class="thread-dec">
-
-                                <tr>
-                                    <th scope="col">Sr.No.</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Party</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody >
-                                
-                                {% for i in range(candidateList|length) %}
-                                
-                                    <tr class="down-row" data-toggle="modal" data-target="#modal{{i}}">
-                                        <td>{{ i+1 }}</td>
-                                        <td>{{ candidateList[i]['name'] }}</td>
-                                        <td>{{ candidateList[i]['party'] }}</td>
+                                    <tr>
+                                        <th scope="col">Sr.No.</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Party</th>
                                     </tr>
 
-                                         
-                                        
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modal{{i}}" tabindex="-1" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                
-                                                <div class="modal-body text-center">
+                                </thead>
+
+                                <tbody >
+                                    
+                                    {% for i in range(candidateList|length) %}
+                                    
+                                        <tr class="down-row" data-toggle="modal" data-target="#modal{{i}}">
+                                            <td>{{ i+1 }}</td>
+                                            <td>{{ candidateList[i]['name'] }}</td>
+                                            <td>{{ candidateList[i]['party'] }}</td>
+                                        </tr>
+
+                                            
+                                            
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modal{{i}}" tabindex="-1" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
                                                     
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    <img class="modal-img" src="static/images/party_logo/{{candidateList[i]['party']}}.png">
-                                                   <p class="name">{{candidateList[i]['name']}}</p>
-                                                   <p class="party"><b>{{candidateList[i]['party']}}</b></p>
-                                                   <p class=cd-id>Candidate ID: {{candidateList[i]['candidate_id']}}</p>
+                                                    <div class="modal-body text-center">
+                                                        
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <img class="modal-img" src="static/images/party_logo/{{candidateList[i]['party']}}.png">
+                                                    <p class="name">{{candidateList[i]['name']}}</p>
+                                                    <p class="party"><b>{{candidateList[i]['party']}}</b></p>
+                                                    <p class=cd-id>Candidate ID: {{candidateList[i]['candidate_id']}}</p>
+                                                    </div>
+                                                
                                                 </div>
-                                               
+                                                </div>
                                             </div>
-                                            </div>
-                                        </div>
 
-                                {% endfor %}
+                                    {% endfor %}
 
-                               
-                            </tbody>
-                    </table>   
-
+                                
+                                </tbody>
+                        </table>   
+                    </div>
                 </div>
 
             </div>

@@ -15,45 +15,46 @@
 
     <div class="row">
 
-        <div class="col-10 mx-auto col-sm-10 tab">
+        <div class="col-11 mx-auto col-sm-10 tab">
 
             <h1>Voter List</h1><br>
+            <div class="table-responsive">
+                <table class="table">
 
-            <table class="table">
+                    <thead class="thread-dec">
 
-                <thead class="thread-dec">
+                        <tr>
 
-                    <tr>
+                            <th scope="col">Voter ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Voted</th>
 
-                        <th scope="col">Voter ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Voted</th>
+                        </tr>
 
-                    </tr>
+                    </thead>
 
-                </thead>
+                    <tbody>
 
-                <tbody>
+                        {% for i in range(voterList|length) %}
 
-                    {% for i in range(voterList|length) %}
+                        <tr class="row-down">
 
-                    <tr class="row-down">
+                            <td>{{ voterList[i]['voter_id'] }}</td>
+                            <td>{{ voterList[i]['name'] }}</td>
+                            <td>
+                            {% if voterList[i]['voted'] == 0 %}
+                                <span class="fa fa-times fa-lg"></span>
+                            {% else %}
+                                <span class="fa fa-check fa-lg"></span>
+                            {% endif %}
+                            </td>
+                        </tr>
 
-                        <td>{{ voterList[i]['voter_id'] }}</td>
-                        <td>{{ voterList[i]['name'] }}</td>
-                        <td>
-                        {% if voterList[i]['voted'] == 0 %}
-                            <span class="fa fa-times fa-lg"></span>
-                        {% else %}
-                            <span class="fa fa-check fa-lg"></span>
-                        {% endif %}
-                        </td>
-                    </tr>
+                        {% endfor %}
 
-                    {% endfor %}
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

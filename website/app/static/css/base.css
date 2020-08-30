@@ -19,6 +19,7 @@ body {
 
   .navbar-brand {
       font-size: 25px;
+      margin-left: 10px;
   }
 
   .navbar-toggler:focus, .navbar-toggler:active:focus, .navbar-toggler.active:focus{

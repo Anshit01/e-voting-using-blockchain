@@ -2,7 +2,7 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block custom_css %}
-   <link rel="stylesheet" href="static/css/dash.css">
+   <link rel="stylesheet" href="static/css/dashboard.css">
    <!---fonts-->
    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
    
@@ -13,7 +13,7 @@
 
    <div class="container">
        <div class="row">
-           <div class="col-md-4 text-center">
+           <div class="col-md-5 ml-xl-auto text-center">
                <h1 class="head"><b>Hello {{username}}</b></h1>
 
                <h2 class="para"> <b>Your security our priority</b></h2><br>
@@ -21,33 +21,45 @@
                <a href="javascript:showUpdateModal();" class="btn btn-update btn-lg ">Update Key</a>
                
 
-               <img src="static/images/dash2.svg" class="dash-pic"></img>
+               <img src="static/images/dash.jpg" class="dash-pic"></img>
 
                <p>Why to put your password at risk. Keep updating your password and get a new key. Updating password
                    adds an extra layer of security to an already highly secure e-voting system. </p>
 
            </div>
 
-           <div class="col-md-7 offset-md-1 profile">
+           <div class="col-11 mx-auto col-md-7 col-lg-6 offset-lg-1 col-xl-5 mr-xl-auto profile">
                 <h1>&lt;&gt;<b>Profile</b>&lt;&gt;</h1><br>
                 <div id="profile-data">
-                    <span class="field">Name: </span>
-                    <span id="name" class="value">{{username}}</span>
+                    <div class="field-parent">
+                        <span class="field">Name: </span>
+                        <span id="name" class="value">{{username}}</span>
+                    </div>
                     <hr>
-                    <span class="field">Voter ID: </span>
-                    <span id="voter-id" class="value">{{voter_id}}</span>
+                    <div class="field-parent">
+                        <span class="field">Voter ID: </span>
+                        <span id="voter-id" class="value">{{voter_id}}</span>
+                    </div>
                     <hr>
-                    <span class="field">Aadhar ID: </span>
-                    <span id="aadhar-id" class="value">{{aadhar_id}}</span>
+                    <div class="field-parent">
+                        <span class="field">Aadhar ID: </span>
+                        <span id="aadhar-id" class="value">{{aadhar_id}}</span>
+                    </div>
                     <hr>
-                    <span class="field">Date of Birth: </span>
-                    <span id="dob" class="value">{{dob}}</span>
+                    <div class="field-parent">
+                        <span class="field">Date of Birth: </span>
+                        <span id="dob" class="value">{{dob}}</span>
+                    </div>
                     <hr>
-                    <span class="field">Contact Number: </span>
-                    <span id="contact-no" class="value">{{contact_no}}</span>
+                    <div class="field-parent">
+                        <span class="field">Contact Number: </span>
+                        <span id="contact-no" class="value">{{contact_no}}</span>
+                    </div>
                     <hr>
-                    <span class="field">Email ID: </span>
-                    <span id="email" class="value">{{email}}</span>
+                    <div class="field-parent">
+                        <span class="field">Email ID: </span>
+                        <span id="email" class="value">{{email}}</span>
+                    </div>
                     
                 </div>
             </div>
