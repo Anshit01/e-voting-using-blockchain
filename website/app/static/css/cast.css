@@ -2,13 +2,9 @@
     width:20%;
 }
 
-body {
-    /* background-color: #14213d;  */
-    
-}
-
 .container {
     margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .btn-cast {
@@ -31,11 +27,11 @@ body {
     border-radius: 20px;
     margin: 20px 5px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    transition: margin 0.3s, box-shadow 0.3s;
+    transition: box-shadow 0.3s, transform 0.3s;
 }
 
 .candidate-div:hover {
-    margin: 10px -5px;
+    transform: scale(1.05);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
