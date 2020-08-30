@@ -37,6 +37,17 @@
                     </div>
                     <hr>
                     <div class="field-parent">
+                        <span class="field">Voted: </span>
+                        <span id="name" class="value">
+                            {% if voted %}
+                                <span class="fa fa-check fa-lg"></span>
+                            {% else %}
+                                <span class="fa fa-times fa-lg"></span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <hr>
+                    <div class="field-parent">
                         <span class="field">Voter ID: </span>
                         <span id="voter-id" class="value">{{voter_id}}</span>
                     </div>
