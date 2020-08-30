@@ -12,14 +12,16 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-10 mx-auto text-center">
+            <div class="col-11 mx-auto text-center">
                 <h2 class="vote">Your Voter ID</h2>
                 <p class="small">{{voter_id}}</p>
                 <h2 class="key">Your Private Key</h2>
-                <p class="small">{{key}}</p>
+                <div class="table-responsive">
+                    <p class="small">{{key}}</p>
+                </div>
                 <hr>
-                <p>Your private key is solely your responsibility. Please keep it safe and keep 
-                    regenerating it.</p>
+                <p>Your private key is solely your responsibility. 
+                    Please keep it safe and keep updating it regularly.</p>
             </div>
         </div>
     </div>
