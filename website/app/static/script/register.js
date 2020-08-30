@@ -24,7 +24,7 @@ function validate() {
     if(regex_name.test(name) == false){
         msg = 'Invalid name'
     }else if(isNaN(new Date(dob).getDate())){
-        mag = 'Invalid date'
+        msg = 'Invalid date'
     }
     else if(regex_aadhar_id.test(aadhar_id) == false){
         msg = 'Invalid Aadhar ID'
