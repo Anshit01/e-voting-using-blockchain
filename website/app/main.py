@@ -254,7 +254,7 @@ def create_user(data : dict):
     error_msg = ''
     try:
         name = data['name']
-        name = ' '.join(name.split())
+        name = ' '.join([word.capitalize() for word in name.split()])
         password = data['password']
         password_hash = hashlib.sha256(password.encode()).hexdigest()
         aadhar_id = data['aadhar_id']

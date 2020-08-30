@@ -2,8 +2,9 @@
     width:20%;
 }
 
-body {
-    background-color: #14213d; 
+.container {
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .btn-cast {
@@ -21,13 +22,17 @@ body {
 .candidate-div {
     height: 330px;
     position: relative;
-    background-color: #fff;
-    margin-top: 3%;
-    padding-top: 4%;
-    padding-bottom: 4%;
+    background-color: rgb(253, 253, 253);
+    padding-top: 20px;
     border-radius: 20px;
-    margin-right: 0%;
-    margin-bottom: 3%;
+    margin: 20px 5px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.candidate-div:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .name {
