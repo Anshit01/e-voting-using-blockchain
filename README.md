@@ -12,3 +12,5 @@
 https://e-voting-blockchain-website.herokuapp.com/
 
 ## Cast your vote and watch the live results
+![voted](https://user-images.githubusercontent.com/57187745/96224703-a06a1e00-0fad-11eb-8734-86c4a408bbb5.png)
+<br/>
