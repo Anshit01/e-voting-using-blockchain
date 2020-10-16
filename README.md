@@ -7,5 +7,6 @@
 >- Live analysis of voting statistics is also available.
 >- No alteration in votes making it more reliable system.
 ## How to vote ?
-![Group 2](https://user-images.githubusercontent.com/57187745/96222524-0eace180-0faa-11eb-9485-8a938cdc5c49.png)
+![timeline](https://user-images.githubusercontent.com/57187745/96223391-71eb4380-0fab-11eb-85a8-b5e5c967dd2a.png)
+
 
